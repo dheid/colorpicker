@@ -65,12 +65,12 @@ import static com.bric.colorpicker.ColorPickerMode.RED;
 import static com.bric.colorpicker.ColorPickerMode.SATURATION;
 
 /**
- * This is the large graphic element in the <code>ColorPicker</code>
+ * This is the large graphic element in the {@code ColorPicker}
  * that depicts a wide range of colors.
  * <P>This panel can operate in 6 different modes.  In each mode a different
  * property is held constant: hue, saturation, brightness, red, green, or blue.
- * (Each property is identified with a constant in the <code>ColorPicker</code> class,
- * such as: <code>ColorPicker.HUE</code> or <code>ColorPicker.GREEN</code>.)
+ * (Each property is identified with a constant in the {@code ColorPicker} class,
+ * such as: <code>ColorPicker.HUE</code> or {@code ColorPicker.GREEN}.)
  * <P>In saturation and brightness mode, a wheel is used.  Although it doesn't
  * use as many pixels as a square does: it is a very aesthetic models since the hue can
  * wrap around in a complete circle.  (Also, on top of looks, this is how most
@@ -81,8 +81,8 @@ import static com.bric.colorpicker.ColorPickerMode.SATURATION;
  * target has the keyboard focus, the user can use the arrow keys to
  * traverse the available colors.
  * <P>Note this target is public and exists independently of the
- * <code>ColorPicker</code> class.  The only way this class is dependent
- * on the <code>ColorPicker</code> class is when the constants for the modes
+ * {@code ColorPicker} class.  The only way this class is dependent
+ * on the {@code ColorPicker} class is when the constants for the modes
  * are used.
  * <P>The graphic in this panel will be based on either the width or
  * the height of this target: depending on which is smaller.
@@ -136,7 +136,7 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
     private ColorListenerWrapper colorListenerWrapper;
 
     /**
-     * Creates a new <code>ColorPickerPanel</code>
+     * Creates a new {@code ColorPickerPanel}
      */
     public ColorPickerPanel() {
         setMaximumSize(new Dimension(MAX_SIZE + imagePadding.left + imagePadding.right,
@@ -250,8 +250,8 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
     /**
      * Set the mode of this panel.
      *
-     * @param mode This must be one of the following constants from the <code>ColorPicker</code> class:
-     *             <code>HUE</code>, <code>SATURATION</code>, <code>BRIGHTNESS</code>, <code>RED</code>, <code>GREEN</code>, or <code>BLUE</code>
+     * @param mode This must be one of the following constants from the {@code ColorPicker} class:
+     *             <code>HUE</code>, <code>SATURATION</code>, <code>BRIGHTNESS</code>, <code>RED</code>, <code>GREEN</code>, or {@code BLUE}
      */
     public void setMode(ColorPickerMode mode) {
         Objects.nonNull(mode);
@@ -269,7 +269,7 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
      * Sets the selected color of this panel.
      * <P>If this panel is in HUE, SATURATION, or BRIGHTNESS mode, then
      * this method converts these values to HSB coordinates
-     * and calls <code>setHSB</code>.
+     * and calls {@code setHSB}.
      * <P>This method may regenerate the graphic if necessary.
      *
      * @param r the red value of the selected color.
@@ -445,7 +445,7 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
      * Sets the selected color of this panel.
      * <P>If this panel is in RED, GREEN, or BLUE mode, then
      * this method converts these values to RGB coordinates
-     * and calls <code>setRGB</code>.
+     * and calls {@code setRGB}.
      * <P>This method may regenerate the graphic if necessary.
      *
      * @param h the hue value of the selected color.

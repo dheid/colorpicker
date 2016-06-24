@@ -105,10 +105,10 @@ public class ColorPickerDialog extends JDialog {
      *
      * @param owner          the dialog this new dialog belongs to.  This must be a Frame or a Dialog.
      *                       Java 1.6 supports Windows here, but this package is designed/compiled to work in Java 1.4,
-     *                       so an <code>IllegalArgumentException</code> will be thrown if this target is a {@code Window}.
+     *                       so an {@code IllegalArgumentException} will be thrown if this target is a {@code Window}.
      * @param originalColor  the color the {@code ColorPicker} initially points to.
      * @param includeOpacity whether to add a control for the opacity of the color.
-     * @return the <code>Color</code> the user chooses, or {@code null} if the user cancels the dialog.
+     * @return the {@code Color} the user chooses, or {@code null} if the user cancels the dialog.
      */
     public static Color showDialog(Window owner, Color originalColor, boolean includeOpacity) {
         return showDialog(owner, null, originalColor, includeOpacity);
@@ -120,9 +120,9 @@ public class ColorPickerDialog extends JDialog {
      *
      * @param owner         the dialog this new dialog belongs to.  This must be a Frame or a Dialog.
      *                      Java 1.6 supports Windows here, but this package is designed/compiled to work in Java 1.4,
-     *                      so an <code>IllegalArgumentException</code> will be thrown if this target is a {@code Window}.
+     *                      so an {@code IllegalArgumentException} will be thrown if this target is a {@code Window}.
      * @param originalColor the color the {@code ColorPicker} initially points to.
-     * @return the <code>Color</code> the user chooses, or {@code null} if the user cancels the dialog.
+     * @return the {@code Color} the user chooses, or {@code null} if the user cancels the dialog.
      */
     public static Color showDialog(Window owner, Color originalColor) {
         return showDialog(owner, null, originalColor, false);

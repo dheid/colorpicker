@@ -24,7 +24,7 @@ import java.awt.Container;
 import java.awt.FocusTraversalPolicy;
 
 /**
- * A simple <code>FocusTraversalPolicy</code> object that delegates to
+ * A simple {@code FocusTraversalPolicy} object that delegates to
  * another object.
  */
 public class DelegateFocusTraversalPolicy extends FocusTraversalPolicy {

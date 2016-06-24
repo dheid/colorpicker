@@ -55,12 +55,12 @@ import java.util.ResourceBundle;
  * This is a row of buttons, intended to be displayed at the
  * bottom of a dialog.  This class is strongly related to the
  * {@link com.bric.colorpicker.QDialog} project, although the
- * <code>DialogFooter</code> can exist by itself.
+ * {@code DialogFooter} can exist by itself.
  * <P>On the left of a footer are controls that should apply to the dialog itself,
  * such as "Help" button, or a "Reset Preferences" button.
  * On the far right are buttons that should dismiss this dialog.  They
  * may be presented in different orders on different platforms based
- * on the <code>reverseButtonOrder</code> boolean.
+ * on the {@code reverseButtonOrder} boolean.
  * <P>Buttons are also generally normalized, so the widths of buttons
  * are equal.
  * <P>This object will "latch onto" the RootPane that contains it.  It is assumed
@@ -84,7 +84,7 @@ import java.util.ResourceBundle;
  * as developers might tend to lazily use this option and phrase dialogs in such
  * a way that yes/no options make sense, but in fact the commit buttons should be
  * more descriptive.
- * <P>Partly because of the need to avoid yes/no questions, <code>DialogFooter</code> introduces the
+ * <P>Partly because of the need to avoid yes/no questions, {@code DialogFooter} introduces the
  * dialog type: SAVE_DONT_SAVE_CANCEL_OPTION.  This is mostly straightforward, but
  * there is one catch: on Mac the buttons
  * are reordered: "Save", "Cancel" and "Don't Save".  This is to conform with standard
@@ -100,7 +100,7 @@ import java.util.ResourceBundle;
  * <LI> On Mac the Help target is the standard Mac help icon.  On other platforms
  * the help target is a {@link com.bric.colorpicker.JLink}.</li>
  * <LI> By default button order is reversed on Macs compared to other platforms.  See
- * the <code>DialogFooter.reverseButtonOrder</code> field for details.</li>
+ * the {@code DialogFooter.reverseButtonOrder} field for details.</li>
  * <LI> There is a static boolean to control whether button mnemonics should be
  * universally activated.  This was added because
  * when studying Windows XP there seemed to be no fixed rules for whether to
@@ -279,7 +279,7 @@ public class DialogFooter extends JPanel {
     private static boolean reverseButtonOrder = JVM.IS_MAC;
     /**
      * This action takes the Window associated with the source of this event,
-     * hides it, and then calls <code>dispose()</code> on it.
+     * hides it, and then calls {@code dispose()} on it.
      * <P>(This will not throw an exception if there is no parent window,
      * but it does nothing in that case...)
      */
@@ -352,15 +352,15 @@ public class DialogFooter extends JPanel {
     private int unsafeButtonGap;
 
     /**
-     * Create a new <code>DialogFooter</code>.
+     * Create a new {@code DialogFooter}.
      *
      * @param leftControls    the controls on the left side of this dialog, such as a help target, or a "Reset" button.
      * @param dismissControls the controls on the right side of this dialog that should dismiss this dialog.  Also
      *                        called "action" buttons.
      * @param autoClose       whether the dismiss buttons should automatically close the containing window.
-     *                        If this is <code>false</code>, then it is assumed someone else is taking care of closing/disposing the
+     *                        If this is {@code false}, then it is assumed someone else is taking care of closing/disposing the
      *                        containing dialog
-     * @param defaultButton   the optional button in <code>dismissControls</code> to make the default button in this dialog.
+     * @param defaultButton   the optional button in {@code dismissControls} to make the default button in this dialog.
      *                        (May be null.)
      */
     private DialogFooter(JComponent[] leftControls, JComponent[] dismissControls, boolean autoClose, JButton defaultButton) {
@@ -420,7 +420,7 @@ public class DialogFooter extends JPanel {
      *
      * @param escapeKeyIsTrigger if true then pressing the escape
      *                           key will trigger this button.  (Also on Macs command-period will act
-     *                           like the escape key.)  This should be <code>false</code> if this button
+     *                           like the escape key.)  This should be {@code false} if this button
      *                           can lead to permanent data loss.
      */
     private static JButton createCancelButton(boolean escapeKeyIsTrigger) {
@@ -451,7 +451,7 @@ public class DialogFooter extends JPanel {
      *
      * @param escapeKeyIsTrigger if true then pressing the escape
      *                           key will trigger this button.  (Also on Macs command-period will act
-     *                           like the escape key.)  This should be <code>false</code> if this button
+     *                           like the escape key.)  This should be {@code false} if this button
      *                           can lead to permanent data loss.
      */
     private static JButton createOKButton(boolean escapeKeyIsTrigger) {
@@ -469,7 +469,7 @@ public class DialogFooter extends JPanel {
      *
      * @param escapeKeyIsTrigger if true then pressing the escape
      *                           key will trigger this button.  (Also on Macs command-period will act
-     *                           like the escape key.)  This should be <code>false</code> if this button
+     *                           like the escape key.)  This should be {@code false} if this button
      *                           can lead to permanent data loss.
      */
     private static JButton createYesButton(boolean escapeKeyIsTrigger) {
@@ -488,7 +488,7 @@ public class DialogFooter extends JPanel {
      *
      * @param escapeKeyIsTrigger if true then pressing the escape
      *                           key will trigger this button.  (Also on Macs command-period will act
-     *                           like the escape key.)  This should be <code>false</code> if this button
+     *                           like the escape key.)  This should be {@code false} if this button
      *                           can lead to permanent data loss.
      */
     private static JButton createNoButton(boolean escapeKeyIsTrigger) {
@@ -507,7 +507,7 @@ public class DialogFooter extends JPanel {
      *
      * @param escapeKeyIsTrigger if true then pressing the escape
      *                           key will trigger this button.  (Also on Macs command-period will act
-     *                           like the escape key.)  This should be <code>false</code> if this button
+     *                           like the escape key.)  This should be {@code false} if this button
      *                           can lead to permanent data loss.
      */
     private static JButton createSaveButton(boolean escapeKeyIsTrigger) {
@@ -526,7 +526,7 @@ public class DialogFooter extends JPanel {
      *
      * @param escapeKeyIsTrigger if true then pressing the escape
      *                           key will trigger this button.  (Also on Macs command-period will act
-     *                           like the escape key.)  This should be <code>false</code> if this button
+     *                           like the escape key.)  This should be {@code false} if this button
      *                           can lead to permanent data loss.
      */
     private static JButton createDontSaveButton(boolean escapeKeyIsTrigger) {
@@ -543,7 +543,7 @@ public class DialogFooter extends JPanel {
     }
 
     /**
-     * Creates a <code>DialogFooter</code>.
+     * Creates a {@code DialogFooter}.
      *
      * @param leftComponents    the components to put on the left side of the footer.
      *                          <P>The Apple guidelines state that this area is reserved for
@@ -552,7 +552,7 @@ public class DialogFooter extends JPanel {
      * @param defaultButton     the OPTION field corresponding to the button that
      *                          should be the default button, or -1 if there should be no default button.
      * @param escapeKeyBehavior one of the EscapeKeyBehavior options in this class.
-     * @return a <code>DialogFooter</code>
+     * @return a {@code DialogFooter}
      */
     public static DialogFooter createDialogFooter(JComponent[] leftComponents, int options, int defaultButton, EscapeKeyBehavior escapeKeyBehavior) {
 
@@ -678,7 +678,7 @@ public class DialogFooter extends JPanel {
     /**
      * This takes a set of buttons and gives them all the width/height
      * of the largest button among them.
-     * <P>(More specifically, this sets the <code>preferredSize</code>
+     * <P>(More specifically, this sets the {@code preferredSize}
      * of each button to the largest preferred size in the list of buttons.
      *
      * @param buttons an array of buttons.

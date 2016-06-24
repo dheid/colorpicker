@@ -97,7 +97,7 @@ public class ColorPicker extends JPanel {
     private static final String SELECTED_COLOR_PROPERTY = "selected color";
 
     /**
-     * <code>PropertyChangeEvents</code> will be triggered for this property when {@code setModeControlsVisible()}
+     * {@code PropertyChangeEvents} will be triggered for this property when {@code setModeControlsVisible()}
      * is called.
      */
     private static final String MODE_CONTROLS_VISIBLE_PROPERTY = "mode controls visible";
@@ -479,8 +479,8 @@ public class ColorPicker extends JPanel {
 
     /**
      * @return the current mode of this {@code ColorPicker}.
-     * <BR>This will return <code>HUE</code>,  <code>SATURATION</code>,  {@code BRIGHTNESS},
-     * <code>RED</code>,  <code>GREEN</code>, or {@code BLUE}.
+     * <BR>This will return <code>HUE</code>,  {@code SATURATION},  {@code BRIGHTNESS},
+     * <code>RED</code>,  {@code GREEN}, or {@code BLUE}.
      * <P>The default mode is {@code BRIGHTNESS}, because that provides the most
      * aesthetic/recognizable color wheel.
      */
@@ -514,7 +514,7 @@ public class ColorPicker extends JPanel {
     }
 
     /**
-     * @return the current <code>Color</code> this {@code ColorPicker} has selected.
+     * @return the current {@code Color} this {@code ColorPicker} has selected.
      */
     public Color getColor() {
         return colorModel.getColor();
@@ -596,7 +596,7 @@ public class ColorPicker extends JPanel {
     }
 
     /**
-     * @return the <code>ColorPickerPanel</code> this {@code ColorPicker} displays.
+     * @return the {@code ColorPickerPanel} this {@code ColorPicker} displays.
      */
     public ColorPickerPanel getColorPanel() {
         return colorPanel;
