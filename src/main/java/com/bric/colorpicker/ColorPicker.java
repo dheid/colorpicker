@@ -465,16 +465,16 @@ public class ColorPicker extends JPanel {
      * <P>Note these live inside the "expert controls", so if {@code setExpertControlsVisible(false)}
      * has been called, then these will never be visible.
      *
-     * @param b
+     * @param visible should controls be visible or not
      */
-    public void setModeControlsVisible(boolean b) {
-        hueOption.setRadioButtonVisible(b && hueOption.isVisible());
-        saturationOption.setRadioButtonVisible(b && saturationOption.isVisible());
-        brightnessOption.setRadioButtonVisible(b && brightnessOption.isVisible());
-        redOption.setRadioButtonVisible(b && redOption.isVisible());
-        greenOption.setRadioButtonVisible(b && greenOption.isVisible());
-        blueOption.setRadioButtonVisible(b && blueOption.isVisible());
-        putClientProperty(MODE_CONTROLS_VISIBLE_PROPERTY, b);
+    public void setModeControlsVisible(boolean visible) {
+        hueOption.setRadioButtonVisible(visible && hueOption.isVisible());
+        saturationOption.setRadioButtonVisible(visible && saturationOption.isVisible());
+        brightnessOption.setRadioButtonVisible(visible && brightnessOption.isVisible());
+        redOption.setRadioButtonVisible(visible && redOption.isVisible());
+        greenOption.setRadioButtonVisible(visible && greenOption.isVisible());
+        blueOption.setRadioButtonVisible(visible && blueOption.isVisible());
+        putClientProperty(MODE_CONTROLS_VISIBLE_PROPERTY, visible);
     }
 
     /**
@@ -586,13 +586,13 @@ public class ColorPicker extends JPanel {
      * has been called, then this method does not affect that spinner.
      * However, the opacity colorslider is <i>not</i> affected by the visibility of the export controls.
      *
-     * @param b
+     * @param visible should opacity controls be visible
      */
-    public final void setOpacityVisible(boolean b) {
-        opacityLabel.setVisible(b);
-        opacitySlider.setVisible(b);
-        alphaOption.setLabelVisible(b);
-        alphaOption.setSpinnerVisible(b);
+    public final void setOpacityVisible(boolean visible) {
+        opacityLabel.setVisible(visible);
+        opacitySlider.setVisible(visible);
+        alphaOption.setLabelVisible(visible);
+        alphaOption.setSpinnerVisible(visible);
     }
 
     /**
