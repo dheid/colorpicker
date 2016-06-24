@@ -9,7 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 
-public class ColorPickerTest {
+public class ColorPickerGUITest {
 
     private DialogFixture fixture;
 

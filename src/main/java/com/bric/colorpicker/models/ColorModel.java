@@ -13,7 +13,7 @@ public class ColorModel {
     private Color color = Color.GREEN;
     private boolean changing;
 
-    public void addListener(ColorListener changeListener) {
+    public void addColorListener(ColorListener changeListener) {
         listeners.add(changeListener);
     }
 
@@ -133,4 +133,7 @@ public class ColorModel {
         fireColorChanged();
     }
 
+    public void removeColorListener(ColorListener listener) {
+        listeners.remove(listener);
+    }
 }

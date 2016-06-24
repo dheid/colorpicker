@@ -20,6 +20,7 @@ package com.bric.colorpicker;/*
 
 import com.bric.colorpicker.colorslider.ColorSlider;
 import com.bric.colorpicker.colorslider.ColorSliderUI;
+import com.bric.colorpicker.listeners.ColorListener;
 import com.bric.colorpicker.listeners.HexFieldListener;
 import com.bric.colorpicker.listeners.SelectAllListener;
 import com.bric.colorpicker.models.ColorModel;
@@ -266,28 +267,6 @@ public class ColorPicker extends JPanel {
         setMode(ColorPickerMode.BRIGHTNESS);
     }
 
-    private void initialize(Option option) {
-        colorModel.addListener(option);
-        option.addSpinnerChangeListener(e -> {
-            if (colorModel.isChanging()) {
-                return;
-            }
-            option.aboutToChangeColor();
-            option.update(colorModel);
-        });
-
-        modeModel.addListener(option);
-        option.addRadioActionListener(e -> {
-            if (colorModel.isChanging()) {
-                return;
-            }
-            option.aboutToChangeMode();
-            option.update(modeModel);
-        });
-
-        option.addFocusListener(new SelectAllListener());
-    }
-
     private static void setOpaque(JComponent jc, boolean opaque) {
         if (jc instanceof JTextField) {
             return;
@@ -314,8 +293,30 @@ public class ColorPicker extends JPanel {
         }
     }
 
+    private void initialize(Option option) {
+        colorModel.addColorListener(option);
+        option.addSpinnerChangeListener(e -> {
+            if (colorModel.isChanging()) {
+                return;
+            }
+            option.aboutToChangeColor();
+            option.update(colorModel);
+        });
+
+        modeModel.addListener(option);
+        option.addRadioActionListener(e -> {
+            if (colorModel.isChanging()) {
+                return;
+            }
+            option.aboutToChangeMode();
+            option.update(modeModel);
+        });
+
+        option.addFocusListener(new SelectAllListener());
+    }
+
     private void initializeOpacitySlider() {
-        colorModel.addListener(opacitySlider);
+        colorModel.addColorListener(opacitySlider);
         opacitySlider.addChangeListener(e -> {
             if (!opacitySlider.getValueIsAdjusting()) {
                 if (colorModel.isChanging()) {
@@ -328,7 +329,7 @@ public class ColorPicker extends JPanel {
     }
 
     private void initializeHexField() {
-        colorModel.addListener(hexField);
+        colorModel.addColorListener(hexField);
         HexFieldListener hexFieldListener = new HexFieldListener();
         hexFieldListener.setColorModel(colorModel);
         hexFieldListener.setHexField(hexField);
@@ -338,14 +339,14 @@ public class ColorPicker extends JPanel {
 
     private void initializePreview() {
         preview.setOpaque(true);
-        colorModel.addListener(preview);
+        colorModel.addColorListener(preview);
     }
 
     private void initializeColorPanel() {
         int height = expertControls.getPreferredSize().height;
         colorPanel.setPreferredSize(new Dimension(height, height));
 
-        colorModel.addListener(colorPanel);
+        colorModel.addColorListener(colorPanel);
         modeModel.addListener(colorPanel);
 
         colorPanel.addChangeListener(e -> {
@@ -359,7 +360,7 @@ public class ColorPicker extends JPanel {
     }
 
     private void initializeSlider() {
-        colorModel.addListener(slider);
+        colorModel.addColorListener(slider);
         modeModel.addListener(slider);
         slider.addChangeListener(e -> {
             if (!slider.getValueIsAdjusting()) {
@@ -639,6 +640,14 @@ public class ColorPicker extends JPanel {
      */
     public void setOpacity(int opacity) {
         setColor(new Color(colorModel.getRed(), colorModel.getGreen(), colorModel.getBlue(), opacity));
+    }
+
+    public void addColorListener(ColorListener listener) {
+        colorModel.addColorListener(listener);
+    }
+
+    public void removeColorListener(ColorListener listener) {
+        colorModel.removeColorListener(listener);
     }
 
 }
