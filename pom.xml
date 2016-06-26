@@ -4,7 +4,7 @@
 
     <groupId>io.github.dheid</groupId>
     <artifactId>colorpicker</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
 
     <name>ColorPicker</name>
     <description>A nice color picker using Java Swing that contains a visual color selection and input boxes to enter
@@ -30,7 +30,7 @@
         <connection>scm:git:git@github.com:dheid/colorpicker.git</connection>
         <developerConnection>scm:git:git@github.com:dheid/colorpicker.git</developerConnection>
         <url>git@github.com:dheid/colorpicker.git</url>
-      <tag>HEAD</tag>
+      <tag>colorpicker-1.1</tag>
   </scm>
 
     <properties>
