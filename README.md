@@ -13,6 +13,14 @@ colorPicker.addColorListener(colorModel -> System.out.println(colorModel.getColo
 
 This creates a color picker component with expert controls and opacity settings. If the user selects a color, the color listener will be notified.
 
+## Continuous Integration
+
+[![Linux/Mac Build Status](https://secure.travis-ci.org/dheid/colorpicker.png)](http://travis-ci.org/dheid/roperty-rest)
+[![Windows Build Status](https://img.shields.io/appveyor/ci/dheid/colorpicker/master.svg?label=windows)](https://ci.appveyor.com/project/dheid/roperty-rest/branch/master)
+[![Coverage Status](https://coveralls.io/repos/dheid/colorpicker/badge.svg?branch=master&service=github)](https://coveralls.io/github/dheid/roperty-rest?branch=master)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.dheid/colorpicker.svg?maxAge=2592000)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22io.github.dheid%22%20AND%20a%3A%22colorpicker%22)
+
+
 ## Contributing
 
 1. Fork it!
