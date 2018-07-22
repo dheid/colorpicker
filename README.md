@@ -1,4 +1,4 @@
-# ColorPicker
+# Java Swing Color Picker Dialog
 
 [![pipeline status](https://gitlab.com/dheid/colorpicker/badges/master/pipeline.svg)](https://gitlab.com/dheid/colorpicker/commits/master)
 [![coverage report](https://gitlab.com/dheid/colorpicker/badges/master/coverage.svg)](https://gitlab.com/dheid/colorpicker/commits/master)
