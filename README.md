@@ -37,7 +37,7 @@ Include the following dependency to your project:
 
 Use the class `com.bric.colorpicker.ColorPicker` as an entry point. You can easily initialize the panel using
 
-```Java
+```java
 ColorPicker colorPicker = new ColorPicker(true, true);
 colorPicker.addColorListener(colorModel -> System.out.println(colorModel.getColor()));
 ```
@@ -46,11 +46,7 @@ This creates a color picker component with expert controls and opacity settings.
 
 ## Contributing
 
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request :D
+Please see here: [Contributing](CONTRIBUTING.md)
 
 ## History
 
