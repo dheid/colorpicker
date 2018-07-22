@@ -7,7 +7,7 @@ variables:
 cache:
   paths:
     - .m2/repository/
-    - /root/.m2/wrapper/dists/
+    - $HOME/.m2/wrapper/
     - target/
 
 build:
