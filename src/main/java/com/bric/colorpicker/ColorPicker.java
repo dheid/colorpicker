@@ -6,14 +6,14 @@ package com.bric.colorpicker;/*
  * Copyright (c) 2011 by Jeremy Wood.
  * All rights reserved.
  *
- * The copyright of this software is owned by Jeremy Wood. 
- * You may not use, copy or modify this software, except in  
- * accordance with the license agreement you entered into with  
+ * The copyright of this software is owned by Jeremy Wood.
+ * You may not use, copy or modify this software, except in
+ * accordance with the license agreement you entered into with
  * Jeremy Wood. For details see accompanying license terms.
- * 
+ *
  * This software is probably, but not necessarily, discussed here:
  * https://javagraphics.java.net/
- * 
+ *
  * That site should also contain the most recent official version
  * of this software.  (See the SVN repository for more details.)
  */
@@ -37,17 +37,8 @@ import com.bric.colorpicker.parts.ColorSwatch;
 import com.bric.colorpicker.parts.HexField;
 import com.bric.colorpicker.parts.OpacitySlider;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import javax.swing.*;
+import java.awt.*;
 import java.util.ResourceBundle;
 
 /**
@@ -197,7 +188,6 @@ public class ColorPicker extends JPanel {
         constraints.insets = normalInsets;
         constraints.gridx += 2;
         constraints.weighty = 1;
-        constraints.gridwidth = 1;
         constraints.fill = GridBagConstraints.VERTICAL;
         constraints.weightx = 0;
         add(slider, constraints);
