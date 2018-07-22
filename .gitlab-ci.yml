@@ -1,0 +1,29 @@
+image: java:8
+
+variables:
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+
+cache:
+  paths:
+    - .m2/repository/
+    - /root/.m2/wrapper/dists/
+    - target/
+
+build:
+  stage: build
+  script:
+    - ./mvnw $MAVEN_CLI_OPTS compile
+
+test:
+  stage: test
+  script:
+    - ./mvnw $MAVEN_CLI_OPTS test
+    - cat target/site/jacoco/index.html
+
+deploy:
+  stage: deploy
+  script:
+    - ./mvnw $MAVEN_CLI_OPTS deploy
+  only:
+    - master
