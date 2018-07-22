@@ -1,10 +1,41 @@
 # ColorPicker
 
+[![pipeline status](https://gitlab.com/dheid/colorpicker/badges/master/pipeline.svg)](https://gitlab.com/dheid/colorpicker/commits/master)
+[![coverage report](https://gitlab.com/dheid/colorpicker/badges/master/coverage.svg)](https://gitlab.com/dheid/colorpicker/commits/master)
+[![Maven Central](https://img.shields.io/maven-central/v/org.drjekyll/colorpicker.svg?maxAge=2592000)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.drjekyll%22%20AND%20a%3A%22colorpicker%22)
+
 A nice color picker using Java Swing that contains a visual color selection and input boxes to enter RGB and HSB values manually.
+
+## Building
+
+Please use the included Maven wrapper to build the JAR.
+
+    ./mvnw package
+    
+After that you can include the file `fontchooser/target/fontchooser-VERSION.jar` into your project (replace VERSION with
+the current project version).
+
+## Install to local Maven repository
+
+To test a version locally, please execute
+
+    ./mvnw install
+    
+This will install the version to your local repository. You can now include it using Maven (see below).
 
 ## Usage
 
-Use the class com.bric.colorpicker.ColorPicker as an entry point. You can easily initialize the panel using
+Include the following dependency to your project:
+
+```xml 
+<dependency>
+  <groupId>org.drjekyll</groupId>
+  <artifactId>colorpicker</artifactId>
+  <version>1.2</version>
+</dependency>
+```
+
+Use the class `com.bric.colorpicker.ColorPicker` as an entry point. You can easily initialize the panel using
 
 ```Java
 ColorPicker colorPicker = new ColorPicker(true, true);
@@ -12,14 +43,6 @@ colorPicker.addColorListener(colorModel -> System.out.println(colorModel.getColo
 ```
 
 This creates a color picker component with expert controls and opacity settings. If the user selects a color, the color listener will be notified.
-
-## Continuous Integration
-
-[![Linux/Mac Build Status](https://secure.travis-ci.org/dheid/colorpicker.png)](http://travis-ci.org/dheid/roperty-rest)
-[![Windows Build Status](https://img.shields.io/appveyor/ci/dheid/colorpicker/master.svg?label=windows)](https://ci.appveyor.com/project/dheid/roperty-rest/branch/master)
-[![Coverage Status](https://coveralls.io/repos/dheid/colorpicker/badge.svg?branch=master&service=gitlab)](https://coveralls.io/gitlab/dheid/roperty-rest?branch=master)
-[![Maven Central](https://img.shields.io/maven-central/v/org.drjekyll/colorpicker.svg?maxAge=2592000)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.drjekyll%22%20AND%20a%3A%22colorpicker%22)
-
 
 ## Contributing
 
