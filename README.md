@@ -12,7 +12,7 @@ Please use the included Maven wrapper to build the JAR.
 
     ./mvnw package
     
-After that you can include the file `fontchooser/target/fontchooser-VERSION.jar` into your project (replace VERSION with
+After that you can include the file `target/colorpicker-VERSION.jar` into your project (replace VERSION with
 the current project version).
 
 ## Install to local Maven repository
