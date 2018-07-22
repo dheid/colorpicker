@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.drjekyll</groupId>
     <artifactId>colorpicker</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2</version>
 
     <name>ColorPicker</name>
     <description>A nice color picker using Java Swing that contains a visual color selection and input boxes to enter
@@ -31,7 +30,7 @@
         <connection>scm:git:git@gitlab.com:dheid/colorpicker.git</connection>
         <developerConnection>scm:git:git@gitlab.com:dheid/colorpicker.git</developerConnection>
         <url>git@gitlab.com:dheid/colorpicker.git</url>
-        <tag>HEAD</tag>
+        <tag>colorpicker-1.2</tag>
     </scm>
 
     <properties>
