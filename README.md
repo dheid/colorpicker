@@ -33,7 +33,7 @@ Include the following dependency to your project:
 <dependency>
   <groupId>org.drjekyll</groupId>
   <artifactId>colorpicker</artifactId>
-  <version>1.3</version>
+  <version>1.3.1</version>
 </dependency>
 ```
 

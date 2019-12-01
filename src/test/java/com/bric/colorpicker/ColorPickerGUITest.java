@@ -9,6 +9,8 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.concurrent.Callable;
+
 @Ignore
 public class ColorPickerGUITest {
 
@@ -21,46 +23,46 @@ public class ColorPickerGUITest {
 
     @Before
     public void setUp() {
-        ColorPickerDialog dialog = GuiActionRunner.execute(() -> new ColorPickerDialog());
-        fixture = new DialogFixture(dialog);
-        fixture.show();
+        ColorPickerDialog dialog = GuiActionRunner.execute((Callable<ColorPickerDialog>) ColorPickerDialog::new);
+        this.fixture = new DialogFixture(dialog);
+        this.fixture.show();
     }
 
     @Test
     public void hexValueCorrectlyParsed() {
-        JTextComponentFixture hex = fixture.textBox("Hex");
+        JTextComponentFixture hex = this.fixture.textBox("Hex");
         hex.deleteText();
         hex.enterText("facade");
 
-        fixture.spinner("Hue").requireValue(335);
-        fixture.spinner("Saturation").requireValue(19);
-        fixture.spinner("Brightness").requireValue(98);
+        this.fixture.spinner("Hue").requireValue(335);
+        this.fixture.spinner("Saturation").requireValue(19);
+        this.fixture.spinner("Brightness").requireValue(98);
 
-        fixture.spinner("Red").requireValue(250);
-        fixture.spinner("Green").requireValue(202);
-        fixture.spinner("Blue").requireValue(222);
+        this.fixture.spinner("Red").requireValue(250);
+        this.fixture.spinner("Green").requireValue(202);
+        this.fixture.spinner("Blue").requireValue(222);
     }
 
     @Test
     public void hsbValuesCorrectlyInterpreted() {
-        fixture.spinner("Hue").enterTextAndCommit("125");
-        fixture.spinner("Saturation").enterTextAndCommit("68");
-        fixture.spinner("Brightness").enterTextAndCommit("52");
+        this.fixture.spinner("Hue").enterTextAndCommit("125");
+        this.fixture.spinner("Saturation").enterTextAndCommit("68");
+        this.fixture.spinner("Brightness").enterTextAndCommit("52");
 
-        fixture.spinner("Red").requireValue(43);
-        fixture.spinner("Green").requireValue(133);
-        fixture.spinner("Blue").requireValue(50);
+        this.fixture.spinner("Red").requireValue(43);
+        this.fixture.spinner("Green").requireValue(133);
+        this.fixture.spinner("Blue").requireValue(50);
     }
 
     @Test
     public void rgbValuesCorrectlyInterpreted() {
-        fixture.spinner("Red").enterTextAndCommit("40");
-        fixture.spinner("Green").enterTextAndCommit("0");
-        fixture.spinner("Blue").enterTextAndCommit("69");
+        this.fixture.spinner("Red").enterTextAndCommit("40");
+        this.fixture.spinner("Green").enterTextAndCommit("0");
+        this.fixture.spinner("Blue").enterTextAndCommit("69");
 
-        fixture.spinner("Hue").requireValue(275);
-        fixture.spinner("Saturation").requireValue(100);
-        fixture.spinner("Brightness").requireValue(27);
+        this.fixture.spinner("Hue").requireValue(275);
+        this.fixture.spinner("Saturation").requireValue(100);
+        this.fixture.spinner("Brightness").requireValue(27);
     }
 
 }

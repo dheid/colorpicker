@@ -1,7 +1,9 @@
 package com.bric.colorpicker;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
+import java.awt.Color;
+import java.awt.EventQueue;
 import java.lang.reflect.InvocationTargetException;
 
 public class ColorPickerExample {
