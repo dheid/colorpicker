@@ -25,11 +25,13 @@ public final class ContextualMenuHelper {
     /**
      * Add a menu item that invokes the argument Runnable when selected.
      *
-     * @param runnable this is invoked (via SwingUtilities.invokeLater()) when this menu
-     *                 item is selected.
+     * @param component    The component to add
+     * @param menuItemName The label of the context menu entry
+     * @param runnable     this is invoked (via SwingUtilities.invokeLater()) when this menu
+     *                     item is selected.
      */
-    public static void add(JComponent jc, String menuItemName, Runnable runnable) {
-        ContextualMenu cmh = getContextualMenuHelper(jc);
+    public static void add(JComponent component, String menuItemName, Runnable runnable) {
+        ContextualMenu cmh = ContextualMenuHelper.getContextualMenuHelper(component);
         cmh.add(menuItemName, runnable);
     }
 
