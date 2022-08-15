@@ -82,7 +82,7 @@
             <artifactId>mockito-junit-jupiter</artifactId>
             <groupId>org.mockito</groupId>
             <scope>test</scope>
-            <version>4.6.1</version>
+            <version>4.7.0</version>
         </dependency>
     </dependencies>
 
