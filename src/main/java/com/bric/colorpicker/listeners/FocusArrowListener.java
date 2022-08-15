@@ -71,7 +71,7 @@ public class FocusArrowListener extends KeyAdapter {
 
         Component comp = null;
 
-        while (withinWindow(p) && (comp == null || comp == component || comp instanceof JPanel)) {
+        while (withinWindow(p) && (comp == null || comp.equals(component) || comp instanceof JPanel)) {
             p.x += dx;
             p.y += dy;
             comp = SwingUtilities.getDeepestComponentAt(window, p.x, p.y);
@@ -85,7 +85,7 @@ public class FocusArrowListener extends KeyAdapter {
         //If a component is below the src, but to the left or right of the center:
         //it should still be detected when you press the down arrow key.
 
-        if (comp != null && comp != component && comp != window && !(comp instanceof JPanel)) {
+        if (comp != null && !comp.equals(component) && !comp.equals(window) && !(comp instanceof JPanel)) {
             comp.requestFocus();
             return true;
         }

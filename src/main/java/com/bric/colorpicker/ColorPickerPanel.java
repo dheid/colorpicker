@@ -260,7 +260,7 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
      *             {@code HUE}, <code>SATURATION</code>, <code>BRIGHTNESS</code>, <code>RED</code>, <code>GREEN</code>, or {@code BLUE}
      */
     public void setMode(ColorPickerMode mode) {
-        Objects.nonNull(mode);
+        Objects.requireNonNull(mode);
 
         if (this.mode == mode) {
             return;

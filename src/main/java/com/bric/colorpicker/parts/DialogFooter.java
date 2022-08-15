@@ -36,6 +36,7 @@ import java.awt.event.HierarchyListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.lang.reflect.Method;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
@@ -222,7 +223,7 @@ public class DialogFooter extends JPanel {
 
         private void setRootPaneContainer(JButton button, RootPaneContainer c) {
             RootPaneContainer lastContainer = (RootPaneContainer) button.getClientProperty("bric.footer.rpc");
-            if (lastContainer == c) {
+            if (Objects.equals(lastContainer, c)) {
                 return;
             }
 
