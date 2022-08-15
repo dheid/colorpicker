@@ -1,7 +1,6 @@
 package com.bric.colorpicker.demo;
 
 import com.bric.colorpicker.ColorPicker;
-
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Point;
@@ -22,9 +21,7 @@ public class ColorPickerDemo {
             PaletteWindow paletteWindow = new PaletteWindow(colorPickerFrame);
             paletteWindow.setPicker(picker);
 
-            picker.addPropertyChangeListener(ColorPicker.MODE_PROPERTY, evt -> {
-                paletteWindow.switchMode(picker.getMode());
-            });
+            picker.addPropertyChangeListener(ColorPicker.MODE_PROPERTY, evt -> paletteWindow.switchMode(picker.getMode()));
 
             colorPickerFrame.addComponentListener(new WindowAttachingListener(colorPickerFrame, paletteWindow));
 

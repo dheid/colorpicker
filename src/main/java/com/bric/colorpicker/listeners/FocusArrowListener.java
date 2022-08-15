@@ -6,21 +6,19 @@
  * Copyright (c) 2011 by Jeremy Wood.
  * All rights reserved.
  *
- * The copyright of this software is owned by Jeremy Wood. 
- * You may not use, copy or modify this software, except in  
- * accordance with the license agreement you entered into with  
+ * The copyright of this software is owned by Jeremy Wood.
+ * You may not use, copy or modify this software, except in
+ * accordance with the license agreement you entered into with
  * Jeremy Wood. For details see accompanying license terms.
- * 
+ *
  * This software is probably, but not necessarily, discussed here:
  * https://javagraphics.java.net/
- * 
+ *
  * That site should also contain the most recent official version
  * of this software.  (See the SVN repository for more details.)
  */
 package com.bric.colorpicker.listeners;
 
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.FocusTraversalPolicy;
@@ -30,6 +28,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashSet;
 import java.util.Set;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 /**
  * This listens for arrow keys and shifts
@@ -170,7 +170,7 @@ public class FocusArrowListener extends KeyAdapter {
             dy = 1;
         }
 
-        this.component = (Component) e.getSource();
+        component = (Component) e.getSource();
         window = SwingUtilities.getWindowAncestor(component);
 
         if (!(dx == 0 && dy == 0) && shiftFocus(dx, dy)) {

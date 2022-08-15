@@ -46,6 +46,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <slf4j.version>1.7.36</slf4j.version>
     </properties>
 
     <dependencyManagement>
@@ -62,10 +63,15 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
             <artifactId>lombok</artifactId>
             <groupId>org.projectlombok</groupId>
-            <scope>provided</scope>
             <version>1.18.24</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <artifactId>junit-jupiter</artifactId>
@@ -75,14 +81,14 @@
         <dependency>
             <artifactId>assertj-core</artifactId>
             <groupId>org.assertj</groupId>
-            <scope>test</scope>
             <version>3.23.1</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
-            <artifactId>mockito-junit-jupiter</artifactId>
-            <groupId>org.mockito</groupId>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
             <scope>test</scope>
-            <version>4.7.0</version>
         </dependency>
     </dependencies>
 

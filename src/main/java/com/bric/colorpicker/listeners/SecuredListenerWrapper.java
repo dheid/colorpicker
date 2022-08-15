@@ -16,7 +16,7 @@ public abstract class SecuredListenerWrapper<T> {
     protected abstract void doValueChanged();
 
     public void aboutToChangeValue() {
-        this.changing = true;
+        changing = true;
     }
 
     public T getListener() {

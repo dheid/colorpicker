@@ -1,23 +1,22 @@
 package com.bric.colorpicker.colorslider;
 
+import static com.bric.colorpicker.ColorPickerMode.HUE;
+
 import com.bric.colorpicker.ColorPickerMode;
 import com.bric.colorpicker.listeners.ColorListener;
 import com.bric.colorpicker.listeners.ColorListenerWrapper;
 import com.bric.colorpicker.listeners.ModeListener;
 import com.bric.colorpicker.models.ColorModel;
 import com.bric.colorpicker.models.ModeModel;
-
+import java.text.MessageFormat;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
-import java.text.MessageFormat;
-
-import static com.bric.colorpicker.ColorPickerMode.HUE;
 
 public class ColorSlider extends JSlider implements ColorListener, ModeListener {
 
     private ColorPickerMode mode;
     private ColorModel colorModel;
-    private ColorListenerWrapper colorListenerWrapper;
+    private final ColorListenerWrapper colorListenerWrapper;
 
     public ColorSlider() {
         super(SwingConstants.VERTICAL, 0, 100, 0);
@@ -64,7 +63,7 @@ public class ColorSlider extends JSlider implements ColorListener, ModeListener 
     @Override
     public void modeChanged(ModeModel modeModel) {
         mode = modeModel.getMode();
-        setInverted(mode.equals(HUE));
+        setInverted(mode == HUE);
         setMaximum(mode.getMax());
 
         if (colorModel != null) {

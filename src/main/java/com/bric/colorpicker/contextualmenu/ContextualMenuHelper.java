@@ -1,8 +1,8 @@
 package com.bric.colorpicker.contextualmenu;
 
-import javax.swing.JComponent;
-
 import static com.bric.colorpicker.contextualmenu.ContextualMenu.MENU_KEY;
+
+import javax.swing.JComponent;
 
 public final class ContextualMenuHelper {
 
@@ -31,7 +31,7 @@ public final class ContextualMenuHelper {
      *                     item is selected.
      */
     public static void add(JComponent component, String menuItemName, Runnable runnable) {
-        ContextualMenu cmh = ContextualMenuHelper.getContextualMenuHelper(component);
+        ContextualMenu cmh = getContextualMenuHelper(component);
         cmh.add(menuItemName, runnable);
     }
 

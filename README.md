@@ -1,31 +1,23 @@
-# Java Swing Color Picker Dialog
+# :art: Java Swing Color Picker Dialog
 
-[![pipeline status](https://gitlab.com/dheid/colorpicker/badges/master/pipeline.svg)](https://gitlab.com/dheid/colorpicker/commits/master)
-[![coverage report](https://gitlab.com/dheid/colorpicker/badges/master/coverage.svg)](https://gitlab.com/dheid/colorpicker/commits/master)
 [![Maven Central](https://img.shields.io/maven-central/v/org.drjekyll/colorpicker.svg?maxAge=2592000)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.drjekyll%22%20AND%20a%3A%22colorpicker%22)
+[![Java CI with Maven](https://github.com/dheid/colorpicker/actions/workflows/build.yml/badge.svg)](https://github.com/dheid/fontchooser/actions/workflows/build.yml)
 
-A nice color picker using Java Swing that contains a visual color selection and input boxes to enter RGB and HSB values manually.
+A nice color picker using Java Swing that contains a visual color selection and input boxes to enter RGB and HSB values manually:
+
+* Two color modes HSV and RGB
+* Includes an alpha selection
+* Determine color by hex code
+* Allows to select color by clicking on color wheel
+* Minimal dependencies (only SLF4J)
+* Compatible with Java versions since version 8
+* Well documented
+* Easy to use
+* Completely free and open source
 
 ![Screenshot of color picker](colorpicker.png)
 
-## Building
-
-Please use the included Maven wrapper to build the JAR.
-
-    ./mvnw package
-    
-After that you can include the file `target/colorpicker-VERSION.jar` into your project (replace VERSION with
-the current project version).
-
-## Install to local Maven repository
-
-To test a version locally, please execute
-
-    ./mvnw install
-    
-This will install the version to your local repository. You can now include it using Maven (see below).
-
-## Usage
+## :wrench: Usage
 
 Include the following dependency to your project:
 
@@ -33,7 +25,7 @@ Include the following dependency to your project:
 <dependency>
   <groupId>org.drjekyll</groupId>
   <artifactId>colorpicker</artifactId>
-  <version>1.3.1</version>
+  <version>1.4.0</version>
 </dependency>
 ```
 
@@ -46,21 +38,55 @@ colorPicker.addColorListener(colorModel -> System.out.println(colorModel.getColo
 
 This creates a color picker component with expert controls and opacity settings. If the user selects a color, the color listener will be notified.
 
-## Contributing
+## :hammer: Building
+
+Please use Maven to build and test the project.
+
+    mvn install
+
+This will install the version to your local repository. You can now include it:
+
+```xml 
+<dependency>
+    <groupId>org.drjekyll</groupId>
+    <artifactId>colorpicker</artifactId>
+    <version>1.4.1-SNAPSHOT</version>
+ </dependency>
+```
+
+or Gradle with Groovy DSL:
+
+```groovy
+implementation 'org.drjekyll:fontchooser:1.4.1-SNAPSHOT'
+```
+
+or Gradle with Kotlin DSL:
+
+```kotlin
+implementation("org.drjekyll:fontchooser:1.4.1-SNAPSHOT")
+```
+
+
+## :handshake: Contributing, Credits and History
 
 Please see here: [Contributing](CONTRIBUTING.md)
 
-## History
-
 This color picker was a part of the javagraphics project (http://javagraphics.blogspot.com), initiated by Jeremy Wood. The javagraphics project is a collection of small stand-alone projects.
-
-## Credits
 
 The original color picker component is copyright 2011 by Jeremy Wood.
 
-## License
+## :scroll: License
 
 This modification of the color picker is released under a BSD 3-Clause
 license. More details can be found here:
  
 https://opensource.org/licenses/BSD-3-Clause
+
+## :loudspeaker: Release Notes
+
+### 1.4.0
+
+* Introduced Lombok
+* Migrated to JUnit 5
+* Updated dependencies and plugins
+* Migrated to GitHub

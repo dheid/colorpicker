@@ -21,19 +21,6 @@ package com.bric.colorpicker.parts;
 
 import com.bric.colorpicker.JVM;
 import com.bric.colorpicker.listeners.FocusArrowListener;
-
-import javax.swing.AbstractAction;
-import javax.swing.AbstractButton;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JInternalFrame;
-import javax.swing.JPanel;
-import javax.swing.JRootPane;
-import javax.swing.KeyStroke;
-import javax.swing.RootPaneContainer;
-import javax.swing.SwingUtilities;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -50,6 +37,18 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.lang.reflect.Method;
 import java.util.ResourceBundle;
+import javax.swing.AbstractAction;
+import javax.swing.AbstractButton;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JInternalFrame;
+import javax.swing.JPanel;
+import javax.swing.JRootPane;
+import javax.swing.KeyStroke;
+import javax.swing.RootPaneContainer;
+import javax.swing.SwingUtilities;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 
 /**
  * This is a row of buttons, intended to be displayed at the
@@ -136,7 +135,7 @@ public class DialogFooter extends JPanel {
      * <P>Note the usage is similar to JOptionPane's, but the numerical value is
      * different, so you cannot substitute JOptionPane.CANCEL_OPTION for DialogFooter.CANCEL_OPTION.
      */
-    private static final int CANCEL_OPTION = DialogFooter.uniqueCtr++;
+    private static final int CANCEL_OPTION = uniqueCtr++;
     /**
      * Used to indicate the user selected "OK" in a dialog.
      * <BR>Also this can be used as a dialog type, to indicate that "OK" should
@@ -144,7 +143,7 @@ public class DialogFooter extends JPanel {
      * <P>Note the usage is similar to JOptionPane's, but the numerical value is
      * different, so you cannot substitute JOptionPane.OK_OPTION for DialogFooter.OK_OPTION.
      */
-    public static final int OK_OPTION = DialogFooter.uniqueCtr++;
+    public static final int OK_OPTION = uniqueCtr++;
     /**
      * Used to indicate the user selected "No" in a dialog.
      * <BR>Also this can be used as a dialog type, to indicate that "No" should
@@ -152,7 +151,7 @@ public class DialogFooter extends JPanel {
      * <P>Note the usage is similar to JOptionPane's, but the numerical value is
      * different, so you cannot substitute JOptionPane.NO_OPTION for DialogFooter.NO_OPTION.
      */
-    private static final int NO_OPTION = DialogFooter.uniqueCtr++;
+    private static final int NO_OPTION = uniqueCtr++;
     /**
      * Used to indicate the user selected "Yes" in a dialog.
      * <BR>Also this can be used as a dialog type, to indicate that "Yes" should
@@ -160,46 +159,46 @@ public class DialogFooter extends JPanel {
      * <P>Note the usage is similar to JOptionPane's, but the numerical value is
      * different, so you cannot substitute JOptionPane.YES_OPTION for DialogFooter.YES_OPTION.
      */
-    private static final int YES_OPTION = DialogFooter.uniqueCtr++;
+    private static final int YES_OPTION = uniqueCtr++;
     /**
      * Used to indicate a dialog should present a "Yes" and "No" option.
      * <P>Note the usage is similar to JOptionPane's, but the numerical value is
      * different, so you cannot substitute JOptionPane.YES_NO_OPTION for DialogFooter.YES_NO_OPTION.
      */
-    private static final int YES_NO_OPTION = DialogFooter.uniqueCtr++;
+    private static final int YES_NO_OPTION = uniqueCtr++;
     /**
      * Used to indicate a dialog should present a "Yes", "No", and "Cancel" option.
      * <P>Note the usage is similar to JOptionPane's, but the numerical value is
      * different, so you cannot substitute JOptionPane.YES_NO_CANCEL_OPTION for DialogFooter.YES_NO_CANCEL_OPTION.
      */
-    private static final int YES_NO_CANCEL_OPTION = DialogFooter.uniqueCtr++;
+    private static final int YES_NO_CANCEL_OPTION = uniqueCtr++;
     /**
      * Used to indicate a dialog should present a "OK" and "Cancel" option.
      * <P>Note the usage is similar to JOptionPane's, but the numerical value is
      * different, so you cannot substitute JOptionPane.OK_CANCEL_OPTION for DialogFooter.OK_CANCEL_OPTION.
      */
-    public static final int OK_CANCEL_OPTION = DialogFooter.uniqueCtr++;
+    public static final int OK_CANCEL_OPTION = uniqueCtr++;
     /**
      * Used to indicate a dialog should present a "Save", "Don't Save", and "Cancel" option.
      */
-    private static final int SAVE_DONT_SAVE_CANCEL_OPTION = DialogFooter.uniqueCtr++;
+    private static final int SAVE_DONT_SAVE_CANCEL_OPTION = uniqueCtr++;
     /**
      * Used to indicate a dialog should present a "Don't Save" and "Save" option.
      * This will be used for QOptionPaneCommon.FILE_EXTERNAL_CHANGES.
      */
-    private static final int DONT_SAVE_SAVE_OPTION = DialogFooter.uniqueCtr++;
+    private static final int DONT_SAVE_SAVE_OPTION = uniqueCtr++;
     /**
      * Used to indicate the user selected "Save" in a dialog.
      * <BR>Also this can be used as a dialog type, to indicate that "Save"
      * should be the only option presented to the user.
      */
-    private static final int SAVE_OPTION = DialogFooter.uniqueCtr++;
+    private static final int SAVE_OPTION = uniqueCtr++;
     /**
      * Used to indicate the user selected "Don't Save" in a dialog.
      * <BR>Also this can be used as a dialog type, to indicate that "Don't Save"
      * should be the only option presented to the user.
      */
-    private static final int DONT_SAVE_OPTION = DialogFooter.uniqueCtr++;
+    private static final int DONT_SAVE_OPTION = uniqueCtr++;
     /**
      * Used to indicate the user selected an option not otherwise
      * specified in this set of constants.  It may be possible
@@ -215,9 +214,9 @@ public class DialogFooter extends JPanel {
             JButton button = (JButton) event.getComponent();
             Window w = SwingUtilities.getWindowAncestor(button);
             if (w instanceof RootPaneContainer) {
-                this.setRootPaneContainer(button, (RootPaneContainer) w);
+                setRootPaneContainer(button, (RootPaneContainer) w);
             } else {
-                this.setRootPaneContainer(button, null);
+                setRootPaneContainer(button, null);
             }
         }
 
@@ -228,21 +227,25 @@ public class DialogFooter extends JPanel {
             }
 
             if (lastContainer != null) {
-                lastContainer.getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).remove(DialogFooter.escapeKey);
-                lastContainer.getRootPane().getActionMap().remove(DialogFooter.escapeKey);
+                lastContainer.getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).remove(
+                    escapeKey);
+                lastContainer.getRootPane().getActionMap().remove(escapeKey);
 
                 if (JVM.IS_MAC) {
-                    lastContainer.getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).remove(DialogFooter.commandPeriodKey);
+                    lastContainer.getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).remove(
+                        commandPeriodKey);
                 }
 
             }
 
             if (c != null) {
-                c.getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(DialogFooter.escapeKey, DialogFooter.escapeKey);
-                c.getRootPane().getActionMap().put(DialogFooter.escapeKey, new ClickAction(button));
+                c.getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
+                    escapeKey, escapeKey);
+                c.getRootPane().getActionMap().put(escapeKey, new ClickAction(button));
 
                 if (JVM.IS_MAC) {
-                    c.getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(DialogFooter.commandPeriodKey, DialogFooter.escapeKey);
+                    c.getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
+                        commandPeriodKey, escapeKey);
                 }
             }
             button.putClientProperty("bric.footer.rpc", c);
@@ -250,12 +253,12 @@ public class DialogFooter extends JPanel {
 
         @Override
         public void ancestorMoved(AncestorEvent event) {
-            this.ancestorAdded(event);
+            ancestorAdded(event);
         }
 
         @Override
         public void ancestorRemoved(AncestorEvent event) {
-            this.ancestorAdded(event);
+            ancestorAdded(event);
 
         }
 
@@ -291,8 +294,8 @@ public class DialogFooter extends JPanel {
     private final HierarchyListener hierarchyListener = new HierarchyListener() {
         @Override
         public void hierarchyChanged(HierarchyEvent e) {
-            this.processRootPane();
-            this.processWindow();
+            processRootPane();
+            processWindow();
         }
 
         private void processRootPane() {
@@ -300,12 +303,13 @@ public class DialogFooter extends JPanel {
             if (root == null) {
                 return;
             }
-            root.setDefaultButton(DialogFooter.this.defaultButton);
+            root.setDefaultButton(defaultButton);
 
 
-            for (JComponent dismissControl : DialogFooter.this.dismissControls) {
+            for (JComponent dismissControl : dismissControls) {
                 if (dismissControl instanceof JButton) {
-                    Character ch = (Character) dismissControl.getClientProperty(DialogFooter.PROPERTY_META_SHORTCUT);
+                    Character ch = (Character) dismissControl.getClientProperty(
+                        PROPERTY_META_SHORTCUT);
                     if (ch != null) {
                         KeyStroke keyStroke = KeyStroke.getKeyStroke(ch.charValue(), Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
                         root.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(keyStroke, keyStroke);
@@ -370,45 +374,43 @@ public class DialogFooter extends JPanel {
         if (dismissControls == null) {
             dismissControls = new JComponent[]{};
         }
-        this.leftControls = DialogFooter.copy(leftControls);
-        this.dismissControls = DialogFooter.copy(dismissControls);
+        this.leftControls = copy(leftControls);
+        this.dismissControls = copy(dismissControls);
         this.defaultButton = defaultButton;
 
         for (int a = 0; a < dismissControls.length; a++) {
             dismissControls[a].putClientProperty("dialog.footer.index", a);
             if (dismissControls[a] instanceof JButton) {
-                ((AbstractButton) dismissControls[a]).addActionListener(this.innerActionListener);
+                ((AbstractButton) dismissControls[a]).addActionListener(innerActionListener);
             } else {
                 //think of things like the JLink: it a label, but it has an ActionListener models
                 try {
                     Class<?> cl = dismissControls[a].getClass();
                     Method m = cl.getMethod("addRadioActionListener", ActionListener.class);
-                    m.invoke(dismissControls[a], this.innerActionListener);
+                    m.invoke(dismissControls[a], innerActionListener);
                 } catch (Throwable t) {
                     //do nothing
                 }
             }
         }
 
-        this.addHierarchyListener(this.hierarchyListener);
+        addHierarchyListener(hierarchyListener);
 
         for (JComponent leftControl : leftControls) {
-            DialogFooter.addFocusArrowListener(leftControl);
+            addFocusArrowListener(leftControl);
         }
         for (JComponent dismissControl : dismissControls) {
-            DialogFooter.addFocusArrowListener(dismissControl);
+            addFocusArrowListener(dismissControl);
         }
 
         if (JVM.IS_MAC) {
-            this.setButtonGap(12);
-        } else if (JVM.IS_VISTA) {
-            this.setButtonGap(8);
+            setButtonGap(12);
         } else {
-            this.setButtonGap(6);
+            setButtonGap(6);
         }
-        this.setUnsafeButtonGap(24);
+        setUnsafeButtonGap(24);
 
-        this.installGUI();
+        installGUI();
     }
 
     /**
@@ -420,11 +422,11 @@ public class DialogFooter extends JPanel {
      *                           can lead to permanent data loss.
      */
     private static JButton createCancelButton(boolean escapeKeyIsTrigger) {
-        JButton button = new JButton(DialogFooter.strings.getString("dialogCancelButton"));
-        button.setMnemonic(DialogFooter.strings.getString("dialogCancelMnemonic").charAt(0));
-        button.putClientProperty(DialogFooter.PROPERTY_OPTION, DialogFooter.CANCEL_OPTION);
+        JButton button = new JButton(strings.getString("dialogCancelButton"));
+        button.setMnemonic(strings.getString("dialogCancelMnemonic").charAt(0));
+        button.putClientProperty(PROPERTY_OPTION, CANCEL_OPTION);
         if (escapeKeyIsTrigger) {
-            DialogFooter.makeEscapeKeyActivate(button);
+            makeEscapeKeyActivate(button);
         }
         return button;
     }
@@ -439,7 +441,7 @@ public class DialogFooter extends JPanel {
      * @param button the button to trigger when the escape key is pressed.
      */
     private static void makeEscapeKeyActivate(AbstractButton button) {
-        button.addAncestorListener(DialogFooter.escapeTriggerListener);
+        button.addAncestorListener(escapeTriggerListener);
     }
 
      /**
@@ -451,11 +453,11 @@ public class DialogFooter extends JPanel {
      *                           can lead to permanent data loss.
      */
     private static JButton createOKButton(boolean escapeKeyIsTrigger) {
-        JButton button = new JButton(DialogFooter.strings.getString("dialogOKButton"));
-        button.setMnemonic(DialogFooter.strings.getString("dialogOKMnemonic").charAt(0));
-        button.putClientProperty(DialogFooter.PROPERTY_OPTION, DialogFooter.OK_OPTION);
+        JButton button = new JButton(strings.getString("dialogOKButton"));
+        button.setMnemonic(strings.getString("dialogOKMnemonic").charAt(0));
+        button.putClientProperty(PROPERTY_OPTION, OK_OPTION);
         if (escapeKeyIsTrigger) {
-            DialogFooter.makeEscapeKeyActivate(button);
+            makeEscapeKeyActivate(button);
         }
         return button;
     }
@@ -469,11 +471,11 @@ public class DialogFooter extends JPanel {
      *                           can lead to permanent data loss.
      */
     private static JButton createYesButton(boolean escapeKeyIsTrigger) {
-        JButton button = new JButton(DialogFooter.strings.getString("dialogYesButton"));
-        button.setMnemonic(DialogFooter.strings.getString("dialogYesMnemonic").charAt(0));
-        button.putClientProperty(DialogFooter.PROPERTY_OPTION, DialogFooter.YES_OPTION);
+        JButton button = new JButton(strings.getString("dialogYesButton"));
+        button.setMnemonic(strings.getString("dialogYesMnemonic").charAt(0));
+        button.putClientProperty(PROPERTY_OPTION, YES_OPTION);
         if (escapeKeyIsTrigger) {
-            DialogFooter.makeEscapeKeyActivate(button);
+            makeEscapeKeyActivate(button);
         }
         return button;
     }
@@ -488,11 +490,11 @@ public class DialogFooter extends JPanel {
      *                           can lead to permanent data loss.
      */
     private static JButton createNoButton(boolean escapeKeyIsTrigger) {
-        JButton button = new JButton(DialogFooter.strings.getString("dialogNoButton"));
-        button.setMnemonic(DialogFooter.strings.getString("dialogNoMnemonic").charAt(0));
-        button.putClientProperty(DialogFooter.PROPERTY_OPTION, DialogFooter.NO_OPTION);
+        JButton button = new JButton(strings.getString("dialogNoButton"));
+        button.setMnemonic(strings.getString("dialogNoMnemonic").charAt(0));
+        button.putClientProperty(PROPERTY_OPTION, NO_OPTION);
         if (escapeKeyIsTrigger) {
-            DialogFooter.makeEscapeKeyActivate(button);
+            makeEscapeKeyActivate(button);
         }
         return button;
     }
@@ -507,11 +509,11 @@ public class DialogFooter extends JPanel {
      *                           can lead to permanent data loss.
      */
     private static JButton createSaveButton(boolean escapeKeyIsTrigger) {
-        JButton button = new JButton(DialogFooter.strings.getString("dialogSaveButton"));
-        button.setMnemonic(DialogFooter.strings.getString("dialogSaveMnemonic").charAt(0));
-        button.putClientProperty(DialogFooter.PROPERTY_OPTION, DialogFooter.SAVE_OPTION);
+        JButton button = new JButton(strings.getString("dialogSaveButton"));
+        button.setMnemonic(strings.getString("dialogSaveMnemonic").charAt(0));
+        button.putClientProperty(PROPERTY_OPTION, SAVE_OPTION);
         if (escapeKeyIsTrigger) {
-            DialogFooter.makeEscapeKeyActivate(button);
+            makeEscapeKeyActivate(button);
         }
         return button;
     }
@@ -526,14 +528,14 @@ public class DialogFooter extends JPanel {
      *                           can lead to permanent data loss.
      */
     private static JButton createDontSaveButton(boolean escapeKeyIsTrigger) {
-        String text = DialogFooter.strings.getString("dialogDontSaveButton");
+        String text = strings.getString("dialogDontSaveButton");
         JButton button = new JButton(text);
-        button.setMnemonic(DialogFooter.strings.getString("dialogDontSaveMnemonic").charAt(0));
-        button.putClientProperty(DialogFooter.PROPERTY_OPTION, DialogFooter.DONT_SAVE_OPTION);
+        button.setMnemonic(strings.getString("dialogDontSaveMnemonic").charAt(0));
+        button.putClientProperty(PROPERTY_OPTION, DONT_SAVE_OPTION);
         //Don't know if this documented by Apple, but command-D usually triggers "Don't Save" buttons:
         button.putClientProperty(PROPERTY_META_SHORTCUT, text.charAt(0));
         if (escapeKeyIsTrigger) {
-            DialogFooter.makeEscapeKeyActivate(button);
+            makeEscapeKeyActivate(button);
         }
         return button;
     }
@@ -554,9 +556,9 @@ public class DialogFooter extends JPanel {
 
         if (escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_NONDEFAULT) {
             int buttonCount = 1;
-            if (options == DialogFooter.OK_CANCEL_OPTION || options == DialogFooter.YES_NO_OPTION || options == DialogFooter.DONT_SAVE_SAVE_OPTION) {
+            if (options == OK_CANCEL_OPTION || options == YES_NO_OPTION || options == DONT_SAVE_SAVE_OPTION) {
                 buttonCount = 2;
-            } else if (options == DialogFooter.SAVE_DONT_SAVE_CANCEL_OPTION || options == DialogFooter.YES_NO_CANCEL_OPTION) {
+            } else if (options == SAVE_DONT_SAVE_CANCEL_OPTION || options == YES_NO_CANCEL_OPTION) {
                 buttonCount = 3;
             }
             if (defaultButton != -1) {
@@ -568,70 +570,70 @@ public class DialogFooter extends JPanel {
         }
 
         JButton cancelButton = null;
-        if (options == DialogFooter.CANCEL_OPTION ||
-            options == DialogFooter.OK_CANCEL_OPTION ||
-            options == DialogFooter.SAVE_DONT_SAVE_CANCEL_OPTION ||
-            options == DialogFooter.YES_NO_CANCEL_OPTION) {
-            cancelButton = DialogFooter.createCancelButton(escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_CANCEL ||
-                escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_NONDEFAULT && defaultButton != DialogFooter.CANCEL_OPTION ||
-                defaultButton == DialogFooter.CANCEL_OPTION &&
+        if (options == CANCEL_OPTION ||
+            options == OK_CANCEL_OPTION ||
+            options == SAVE_DONT_SAVE_CANCEL_OPTION ||
+            options == YES_NO_CANCEL_OPTION) {
+            cancelButton = createCancelButton(escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_CANCEL ||
+                escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_NONDEFAULT && defaultButton != CANCEL_OPTION ||
+                defaultButton == CANCEL_OPTION &&
                     escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_DEFAULT);
         }
         JButton dontSaveButton = null;
-        if (options == DialogFooter.DONT_SAVE_OPTION || options == DialogFooter.SAVE_DONT_SAVE_CANCEL_OPTION || options == DialogFooter.DONT_SAVE_SAVE_OPTION) {
-            dontSaveButton = DialogFooter.createDontSaveButton(
-                escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_NONDEFAULT && defaultButton != DialogFooter.DONT_SAVE_OPTION ||
-                    escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_DEFAULT && defaultButton == DialogFooter.DONT_SAVE_OPTION);
+        if (options == DONT_SAVE_OPTION || options == SAVE_DONT_SAVE_CANCEL_OPTION || options == DONT_SAVE_SAVE_OPTION) {
+            dontSaveButton = createDontSaveButton(
+                escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_NONDEFAULT && defaultButton != DONT_SAVE_OPTION ||
+                    escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_DEFAULT && defaultButton == DONT_SAVE_OPTION);
         }
         JButton noButton = null;
-        if (options == DialogFooter.NO_OPTION || options == DialogFooter.YES_NO_OPTION || options == DialogFooter.YES_NO_CANCEL_OPTION) {
-            noButton = DialogFooter.createNoButton(
-                escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_NONDEFAULT && defaultButton != DialogFooter.NO_OPTION ||
-                    escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_DEFAULT && defaultButton == DialogFooter.NO_OPTION);
+        if (options == NO_OPTION || options == YES_NO_OPTION || options == YES_NO_CANCEL_OPTION) {
+            noButton = createNoButton(
+                escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_NONDEFAULT && defaultButton != NO_OPTION ||
+                    escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_DEFAULT && defaultButton == NO_OPTION);
         }
         JButton okButton = null;
-        if (options == DialogFooter.OK_OPTION ||
-            options == DialogFooter.OK_CANCEL_OPTION) {
-            okButton = DialogFooter.createOKButton(
-                escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_NONDEFAULT && defaultButton != DialogFooter.OK_OPTION ||
-                    escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_DEFAULT && defaultButton == DialogFooter.OK_OPTION);
+        if (options == OK_OPTION ||
+            options == OK_CANCEL_OPTION) {
+            okButton = createOKButton(
+                escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_NONDEFAULT && defaultButton != OK_OPTION ||
+                    escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_DEFAULT && defaultButton == OK_OPTION);
         }
         JButton saveButton = null;
-        if (options == DialogFooter.SAVE_OPTION || options == DialogFooter.SAVE_DONT_SAVE_CANCEL_OPTION || options == DialogFooter.DONT_SAVE_SAVE_OPTION) {
-            saveButton = DialogFooter.createSaveButton(
-                escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_NONDEFAULT && defaultButton != DialogFooter.SAVE_OPTION ||
-                    escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_DEFAULT && defaultButton == DialogFooter.SAVE_OPTION);
+        if (options == SAVE_OPTION || options == SAVE_DONT_SAVE_CANCEL_OPTION || options == DONT_SAVE_SAVE_OPTION) {
+            saveButton = createSaveButton(
+                escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_NONDEFAULT && defaultButton != SAVE_OPTION ||
+                    escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_DEFAULT && defaultButton == SAVE_OPTION);
         }
         JButton yesButton = null;
-        if (options == DialogFooter.YES_OPTION || options == DialogFooter.YES_NO_OPTION || options == DialogFooter.YES_NO_CANCEL_OPTION) {
-            yesButton = DialogFooter.createYesButton(
-                escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_NONDEFAULT && defaultButton != DialogFooter.YES_OPTION ||
-                    escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_DEFAULT && defaultButton == DialogFooter.YES_OPTION);
+        if (options == YES_OPTION || options == YES_NO_OPTION || options == YES_NO_CANCEL_OPTION) {
+            yesButton = createYesButton(
+                escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_NONDEFAULT && defaultButton != YES_OPTION ||
+                    escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_DEFAULT && defaultButton == YES_OPTION);
         }
 
         JButton[] dismissControls;
-        if (options == DialogFooter.CANCEL_OPTION) {
+        if (options == CANCEL_OPTION) {
             dismissControls = new JButton[]{cancelButton};
-        } else if (options == DialogFooter.DONT_SAVE_OPTION) {
+        } else if (options == DONT_SAVE_OPTION) {
             dismissControls = new JButton[]{dontSaveButton};
-        } else if (options == DialogFooter.NO_OPTION) {
+        } else if (options == NO_OPTION) {
             dismissControls = new JButton[]{noButton};
-        } else if (options == DialogFooter.OK_CANCEL_OPTION) {
+        } else if (options == OK_CANCEL_OPTION) {
             dismissControls = new JButton[]{okButton, cancelButton};
-        } else if (options == DialogFooter.OK_OPTION) {
+        } else if (options == OK_OPTION) {
             dismissControls = new JButton[]{okButton};
-        } else if (options == DialogFooter.DONT_SAVE_SAVE_OPTION) {
+        } else if (options == DONT_SAVE_SAVE_OPTION) {
             dismissControls = new JButton[]{dontSaveButton, saveButton};
-        } else if (options == DialogFooter.SAVE_DONT_SAVE_CANCEL_OPTION) {
-            DialogFooter.setUnsafe(dontSaveButton, true);
+        } else if (options == SAVE_DONT_SAVE_CANCEL_OPTION) {
+            setUnsafe(dontSaveButton, true);
             dismissControls = new JButton[]{saveButton, dontSaveButton, cancelButton};
-        } else if (options == DialogFooter.SAVE_OPTION) {
+        } else if (options == SAVE_OPTION) {
             dismissControls = new JButton[]{saveButton};
-        } else if (options == DialogFooter.YES_NO_CANCEL_OPTION) {
+        } else if (options == YES_NO_CANCEL_OPTION) {
             dismissControls = new JButton[]{yesButton, noButton, cancelButton};
-        } else if (options == DialogFooter.YES_NO_OPTION) {
+        } else if (options == YES_NO_OPTION) {
             dismissControls = new JButton[]{yesButton, noButton};
-        } else if (options == DialogFooter.YES_OPTION) {
+        } else if (options == YES_OPTION) {
             dismissControls = new JButton[]{yesButton};
         } else {
             throw new IllegalArgumentException("Unrecognized dialog type.");
@@ -640,7 +642,7 @@ public class DialogFooter extends JPanel {
 
         JButton theDefaultButton = null;
         for (JButton dismissControl : dismissControls) {
-            int i = (Integer) dismissControl.getClientProperty(DialogFooter.PROPERTY_OPTION);
+            int i = (Integer) dismissControl.getClientProperty(PROPERTY_OPTION);
             if (i == defaultButton) {
                 theDefaultButton = dismissControl;
             }
@@ -707,9 +709,9 @@ public class DialogFooter extends JPanel {
      * On Macs an unsafe button is spaced farther away from safe buttons.
      */
     private static boolean isUnsafe(JComponent c) {
-        Boolean b = (Boolean) c.getClientProperty(DialogFooter.PROPERTY_UNSAFE);
+        Boolean b = (Boolean) c.getClientProperty(PROPERTY_UNSAFE);
         if (b == null) {
-            b = Boolean.FALSE;
+            return Boolean.FALSE;
         }
         return b;
     }
@@ -718,27 +720,27 @@ public class DialogFooter extends JPanel {
      * This sets the unsafe flag for buttons.
      */
     private static void setUnsafe(JComponent c, boolean b) {
-        c.putClientProperty(DialogFooter.PROPERTY_UNSAFE, b);
+        c.putClientProperty(PROPERTY_UNSAFE, b);
     }
 
     private void setButtonGap(int gap) {
-        if (this.buttonGap == gap) {
+        if (buttonGap == gap) {
             return;
         }
-        this.buttonGap = gap;
-        this.installGUI();
+        buttonGap = gap;
+        installGUI();
     }
 
      private void setUnsafeButtonGap(int unsafeGap) {
-         if (this.unsafeButtonGap == unsafeGap) {
+         if (unsafeButtonGap == unsafeGap) {
              return;
          }
-         this.unsafeButtonGap = unsafeGap;
-         this.installGUI();
+         unsafeButtonGap = unsafeGap;
+         installGUI();
      }
 
     private void installGUI() {
-        this.removeAll();
+        removeAll();
 
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
@@ -748,25 +750,25 @@ public class DialogFooter extends JPanel {
         c.fill = GridBagConstraints.NONE;
         c.insets = new Insets(0, 0, 0, 0);
         c.anchor = GridBagConstraints.CENTER;
-        for (JComponent leftControl : this.leftControls) {
-            this.add(leftControl, c);
+        for (JComponent leftControl : leftControls) {
+            add(leftControl, c);
             c.gridx++;
-            c.insets = new Insets(0, 0, 0, this.buttonGap);
+            c.insets = new Insets(0, 0, 0, buttonGap);
         }
         c.weightx = 1;
         c.insets = new Insets(0, 0, 0, 0);
         JPanel fluff = new JPanel();
         fluff.setOpaque(false);
 
-        if (this.leftControls.length > 0) {
-            this.add(fluff, c); //fluff to enforce the left and right sides
+        if (leftControls.length > 0) {
+            add(fluff, c); //fluff to enforce the left and right sides
             c.gridx++;
         }
         c.weightx = 0;
         int unsafeCtr = 0;
         int safeCtr = 0;
-        for (JComponent dismissControl1 : this.dismissControls) {
-            if (JVM.IS_MAC && DialogFooter.isUnsafe(dismissControl1)) {
+        for (JComponent dismissControl1 : dismissControls) {
+            if (JVM.IS_MAC && isUnsafe(dismissControl1)) {
                 unsafeCtr++;
             } else {
                 safeCtr++;
@@ -776,9 +778,9 @@ public class DialogFooter extends JPanel {
         JButton[] safeButtons = new JButton[safeCtr];
         unsafeCtr = 0;
         safeCtr = 0;
-        for (JComponent dismissControl : this.dismissControls) {
+        for (JComponent dismissControl : dismissControls) {
             if (dismissControl instanceof JButton) {
-                if (JVM.IS_MAC && DialogFooter.isUnsafe(dismissControl)) {
+                if (JVM.IS_MAC && isUnsafe(dismissControl)) {
                     unsafeButtons[unsafeCtr++] = (JButton) dismissControl;
                 } else {
                     safeButtons[safeCtr++] = (JButton) dismissControl;
@@ -790,34 +792,34 @@ public class DialogFooter extends JPanel {
         c.ipady = 0;
         c.insets = new Insets(0, 0, 0, 0);
         for (int a = 0; a < unsafeButtons.length; a++) {
-            JComponent comp = DialogFooter.reverseButtonOrder ?
+            JComponent comp = reverseButtonOrder ?
                 unsafeButtons[unsafeButtons.length - 1 - a] :
                 unsafeButtons[a];
-            this.add(comp, c);
+            add(comp, c);
             c.gridx++;
-            c.insets.left = this.buttonGap;
+            c.insets.left = buttonGap;
         }
         if (unsafeButtons.length > 0) {
-            c.insets.left = this.unsafeButtonGap;
-        } else if (this.leftControls.length == 0) {
+            c.insets.left = unsafeButtonGap;
+        } else if (leftControls.length == 0) {
             c.weightx = 1;
-            this.add(fluff, c);
+            add(fluff, c);
             c.weightx = 0;
             c.gridx++;
         }
 
         for (int a = 0; a < safeButtons.length; a++) {
-            JComponent comp = DialogFooter.reverseButtonOrder ?
+            JComponent comp = reverseButtonOrder ?
                 safeButtons[safeButtons.length - 1 - a] :
                 safeButtons[a];
 
-            this.add(comp, c);
+            add(comp, c);
             c.gridx++;
-            c.insets.left = this.buttonGap;
+            c.insets.left = buttonGap;
         }
 
-        DialogFooter.normalizeButtons(unsafeButtons);
-        DialogFooter.normalizeButtons(safeButtons);
+        normalizeButtons(unsafeButtons);
+        normalizeButtons(safeButtons);
     }
 
     /**
@@ -827,10 +829,10 @@ public class DialogFooter extends JPanel {
      * @return the button that maps to that option, or null if no such button was found.
      */
     public JButton getButton(int buttonType) {
-        for (int a = 0; a < this.getComponentCount(); a++) {
-            if (this.getComponent(a) instanceof JButton) {
-                JButton button = (JButton) this.getComponent(a);
-                Object value = button.getClientProperty(DialogFooter.PROPERTY_OPTION);
+        for (int a = 0; a < getComponentCount(); a++) {
+            if (getComponent(a) instanceof JButton) {
+                JButton button = (JButton) getComponent(a);
+                Object value = button.getClientProperty(PROPERTY_OPTION);
                 int intValue = -1;
                 if (value instanceof Number) {
                     intValue = ((Number) value).intValue();
@@ -844,7 +846,7 @@ public class DialogFooter extends JPanel {
     }
 
     public void addOkButtonActionListener(ActionListener okListener) {
-        this.getButton(DialogFooter.OK_OPTION).addActionListener(okListener);
+        getButton(OK_OPTION).addActionListener(okListener);
     }
 
     private static class CloseDialogAndDisposeAction extends AbstractAction {
@@ -875,8 +877,8 @@ public class DialogFooter extends JPanel {
         public void actionPerformed(ActionEvent e) {
             JComponent lastSelectedComponent = (JComponent) e.getSource();
 
-            if (DialogFooter.this.autoClose) {
-                DialogFooter.closeDialogAndDisposeAction.actionPerformed(e);
+            if (autoClose) {
+                closeDialogAndDisposeAction.actionPerformed(e);
             }
         }
     }

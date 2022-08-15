@@ -2,9 +2,6 @@ package com.bric.colorpicker.demo;
 
 import com.bric.colorpicker.ColorPicker;
 import com.bric.colorpicker.ColorPickerMode;
-
-import javax.swing.AbstractButton;
-import javax.swing.JWindow;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -12,14 +9,16 @@ import java.awt.Point;
 import java.awt.Window;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import javax.swing.AbstractButton;
+import javax.swing.JWindow;
 
 
 public class PaletteWindow extends JWindow {
 
     public static final int HORIZONTAL_DISTANCE = 10;
     private final ModeComboBox comboBox = new ModeComboBox();
-    private List<PickerModificator> pickerModificators = new ArrayList<>();
+    private final Collection<PickerModificator> pickerModificators = new ArrayList<>(1);
 
     public void setPicker(ColorPicker picker) {
         comboBox.setPicker(picker);

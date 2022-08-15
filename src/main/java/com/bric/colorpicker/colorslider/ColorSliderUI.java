@@ -6,14 +6,14 @@
  * Copyright (c) 2011 by Jeremy Wood.
  * All rights reserved.
  *
- * The copyright of this software is owned by Jeremy Wood. 
- * You may not use, copy or modify this software, except in  
- * accordance with the license agreement you entered into with  
+ * The copyright of this software is owned by Jeremy Wood.
+ * You may not use, copy or modify this software, except in
+ * accordance with the license agreement you entered into with
  * Jeremy Wood. For details see accompanying license terms.
- * 
+ *
  * This software is probably, but not necessarily, discussed here:
  * https://javagraphics.java.net/
- * 
+ *
  * That site should also contain the most recent official version
  * of this software.  (See the SVN repository for more details.)
  */
@@ -22,11 +22,6 @@ package com.bric.colorpicker.colorslider;
 import com.bric.colorpicker.ColorPicker;
 import com.bric.colorpicker.ColorPickerMode;
 import com.bric.colorpicker.ColorPickerPanel;
-
-import javax.swing.JSlider;
-import javax.swing.SwingConstants;
-import javax.swing.event.MouseInputAdapter;
-import javax.swing.plaf.basic.BasicSliderUI;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -39,16 +34,18 @@ import java.awt.TexturePaint;
 import java.awt.Toolkit;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
+import javax.swing.JSlider;
+import javax.swing.event.MouseInputAdapter;
+import javax.swing.plaf.basic.BasicSliderUI;
 
 /**
  * This is a SliderUI designed specifically for the
  * {@code ColorPicker}.
  */
 public class ColorSliderUI extends BasicSliderUI {
-    private ColorPicker colorPicker;
+    private final ColorPicker colorPicker;
     /**
      * Half of the height of the arrow
      */
@@ -62,7 +59,7 @@ public class ColorSliderUI extends BasicSliderUI {
      * scroll through several colors to get where they clicked:
      * they simply want the color they selected.
      */
-    private final MouseInputAdapter myMouseListener = new SliderMouseListener();
+    private final MouseInputAdapter myMouseListener = new SliderMouseListener(this, this.slider);
 
     public ColorSliderUI(JSlider b, ColorPicker cp) {
         super(b);
@@ -111,14 +108,16 @@ public class ColorSliderUI extends BasicSliderUI {
     @Override
     public synchronized void paintTrack(Graphics g) {
         ColorPickerMode mode = colorPicker.getMode();
-        if (mode.equals(ColorPickerMode.HUE) || mode.equals(ColorPickerMode.BRIGHTNESS) || mode.equals(ColorPickerMode.SATURATION)) {
+        if (mode == ColorPickerMode.HUE
+            || mode == ColorPickerMode.BRIGHTNESS
+            || mode == ColorPickerMode.SATURATION) {
             float[] hsb = colorPicker.getHSB();
-            if (mode.equals(ColorPickerMode.HUE)) {
+            if (mode == ColorPickerMode.HUE) {
                 for (int y = 0; y < trackRect.height; y++) {
                     float hue = (float) y / trackRect.height;
                     intArray[y] = Color.HSBtoRGB(hue, 1, 1);
                 }
-            } else if (mode.equals(ColorPickerMode.SATURATION)) {
+            } else if (mode == ColorPickerMode.SATURATION) {
                 for (int y = 0; y < trackRect.height; y++) {
                     float sat = 1 - (float) y / trackRect.height;
                     intArray[y] = Color.HSBtoRGB(hsb[0], sat, hsb[2]);
@@ -131,17 +130,17 @@ public class ColorSliderUI extends BasicSliderUI {
             }
         } else {
             int[] rgb = colorPicker.getRGB();
-            if (mode.equals(ColorPickerMode.RED)) {
+            if (mode == ColorPickerMode.RED) {
                 for (int y = 0; y < trackRect.height; y++) {
                     int red = 255 - (int) (y * 255 / trackRect.height + 0.49);
                     intArray[y] = (red << 16) + (rgb[1] << 8) + rgb[2];
                 }
-            } else if (mode.equals(ColorPickerMode.GREEN)) {
+            } else if (mode == ColorPickerMode.GREEN) {
                 for (int y = 0; y < trackRect.height; y++) {
                     int green = 255 - (int) (y * 255 / trackRect.height + 0.49);
                     intArray[y] = (rgb[0] << 16) + (green << 8) + rgb[2];
                 }
-            } else if (mode.equals(ColorPickerMode.BLUE)) {
+            } else if (mode == ColorPickerMode.BLUE) {
                 for (int y = 0; y < trackRect.height; y++) {
                     int blue = 255 - (int) (y * 255 / trackRect.height + 0.49);
                     intArray[y] = (rgb[0] << 16) + (rgb[1] << 8) + blue;
@@ -195,39 +194,9 @@ public class ColorSliderUI extends BasicSliderUI {
 
         @Override
         public void componentResized(ComponentEvent e) {
-            ColorSliderUI.this.calculateGeometry();
+            calculateGeometry();
             slider.repaint();
         }
     }
 
-    public class SliderMouseListener extends MouseInputAdapter {
-        @Override
-        public void mousePressed(MouseEvent e) {
-            slider.setValueIsAdjusting(true);
-            updateSliderValue(e);
-        }
-
-        private void updateSliderValue(MouseEvent e) {
-            int v;
-            if (slider.getOrientation() == SwingConstants.HORIZONTAL) {
-                int x = e.getX();
-                v = valueForXPosition(x);
-            } else {
-                int y = e.getY();
-                v = valueForYPosition(y);
-            }
-            slider.setValue(v);
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            updateSliderValue(e);
-            slider.setValueIsAdjusting(false);
-        }
-
-        @Override
-        public void mouseDragged(MouseEvent e) {
-            updateSliderValue(e);
-        }
-    }
 }

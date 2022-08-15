@@ -6,29 +6,28 @@
  * Copyright (c) 2011 by Jeremy Wood.
  * All rights reserved.
  *
- * The copyright of this software is owned by Jeremy Wood. 
- * You may not use, copy or modify this software, except in  
- * accordance with the license agreement you entered into with  
+ * The copyright of this software is owned by Jeremy Wood.
+ * You may not use, copy or modify this software, except in
+ * accordance with the license agreement you entered into with
  * Jeremy Wood. For details see accompanying license terms.
- * 
+ *
  * This software is probably, but not necessarily, discussed here:
  * https://javagraphics.java.net/
- * 
+ *
  * That site should also contain the most recent official version
  * of this software.  (See the SVN repository for more details.)
  */
 package com.bric.colorpicker.colorslider;
 
 import com.bric.colorpicker.JVM;
-
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Shape;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 /**
  * Some static methods for some common painting functions.
@@ -64,13 +63,13 @@ public class Painter {
      * <BR>{@code UIManager.put("focusRing",customColor);}
      */
     private static Color getFocusRingColor() {
-        Object obj = UIManager.getColor("Focus.color");
-        if (obj instanceof Color) {
-            return (Color) obj;
+        Color obj = UIManager.getColor("Focus.color");
+        if (obj != null) {
+            return obj;
         }
-        obj = UIManager.getColor("focusRing");
-        if (obj instanceof Color) {
-            return (Color) obj;
+        Color focusRingColor = UIManager.getColor("focusRing");
+        if (focusRingColor != null) {
+            return focusRingColor;
         }
         return new Color(64, 113, 167);
     }

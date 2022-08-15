@@ -1,5 +1,7 @@
 package com.bric.colorpicker.options;
 
+import static javax.swing.JSpinner.DefaultEditor;
+
 import com.bric.colorpicker.ColorPickerMode;
 import com.bric.colorpicker.listeners.ColorListener;
 import com.bric.colorpicker.listeners.ColorListenerWrapper;
@@ -7,7 +9,11 @@ import com.bric.colorpicker.listeners.ModeListener;
 import com.bric.colorpicker.listeners.ModeListenerWrapper;
 import com.bric.colorpicker.models.ColorModel;
 import com.bric.colorpicker.models.ModeModel;
-
+import java.awt.Container;
+import java.awt.GridBagConstraints;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusListener;
+import java.util.ResourceBundle;
 import javax.swing.ButtonGroup;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -15,13 +21,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeListener;
-import java.awt.Container;
-import java.awt.GridBagConstraints;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusListener;
-import java.util.ResourceBundle;
-
-import static javax.swing.JSpinner.DefaultEditor;
 
 public abstract class Option implements ColorListener, ModeListener {
 
@@ -37,7 +36,7 @@ public abstract class Option implements ColorListener, ModeListener {
         this.mode = mode;
         spinner = new JSpinner(new SpinnerNumberModel(0, 0, mode.getMax(), 5));
         label = new JLabel(text);
-        colorListenerWrapper = ColorListenerWrapper.withListener(colorModel -> doColorChanged(colorModel));
+        colorListenerWrapper = ColorListenerWrapper.withListener(this::doColorChanged);
         modeListenerWrapper = ModeListenerWrapper.withListener(modeModel -> setSelected(modeModel.getMode() == mode));
     }
 

@@ -1,14 +1,13 @@
 package com.bric.colorpicker.listeners;
 
 import com.bric.colorpicker.contextualmenu.ContextualMenu;
-
-import javax.swing.SwingUtilities;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.SwingUtilities;
 
 public class PopupListener extends MouseAdapter {
 
-    private ContextualMenu contextualMenu;
+    private final ContextualMenu contextualMenu;
 
     public PopupListener(ContextualMenu contextualMenu) {
         this.contextualMenu = contextualMenu;

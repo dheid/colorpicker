@@ -19,6 +19,13 @@
  */
 package com.bric.colorpicker;
 
+import static com.bric.colorpicker.ColorPickerMode.BLUE;
+import static com.bric.colorpicker.ColorPickerMode.BRIGHTNESS;
+import static com.bric.colorpicker.ColorPickerMode.GREEN;
+import static com.bric.colorpicker.ColorPickerMode.HUE;
+import static com.bric.colorpicker.ColorPickerMode.RED;
+import static com.bric.colorpicker.ColorPickerMode.SATURATION;
+
 import com.bric.colorpicker.colorslider.Painter;
 import com.bric.colorpicker.listeners.ColorListener;
 import com.bric.colorpicker.listeners.ColorListenerWrapper;
@@ -26,12 +33,6 @@ import com.bric.colorpicker.listeners.ModeListener;
 import com.bric.colorpicker.listeners.RepaintFocusListener;
 import com.bric.colorpicker.models.ColorModel;
 import com.bric.colorpicker.models.ModeModel;
-
-import javax.swing.JPanel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.MouseInputAdapter;
-import javax.swing.event.MouseInputListener;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -54,15 +55,14 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import java.util.Objects;
-
-import static com.bric.colorpicker.ColorPickerMode.BLUE;
-import static com.bric.colorpicker.ColorPickerMode.BRIGHTNESS;
-import static com.bric.colorpicker.ColorPickerMode.GREEN;
-import static com.bric.colorpicker.ColorPickerMode.HUE;
-import static com.bric.colorpicker.ColorPickerMode.RED;
-import static com.bric.colorpicker.ColorPickerMode.SATURATION;
+import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.MouseInputAdapter;
+import javax.swing.event.MouseInputListener;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * This is the large graphic element in the {@code ColorPicker}
@@ -70,7 +70,7 @@ import static com.bric.colorpicker.ColorPickerMode.SATURATION;
  * <P>This panel can operate in 6 different modes.  In each mode a different
  * property is held constant: hue, saturation, brightness, red, green, or blue.
  * (Each property is identified with a constant in the {@code ColorPicker} class,
- * such as: <code>ColorPicker.HUE</code> or {@code ColorPicker.GREEN}.)
+ * such as: {@code ColorPicker.HUE} or {@code ColorPicker.GREEN}.)
  * <P>In saturation and brightness mode, a wheel is used.  Although it doesn't
  * use as many pixels as a square does: it is a very aesthetic models since the hue can
  * wrap around in a complete circle.  (Also, on top of looks, this is how most
@@ -90,6 +90,7 @@ import static com.bric.colorpicker.ColorPickerMode.SATURATION;
  * @see ColorPicker
  * @see ColorPickerDialog
  */
+@Slf4j
 public class ColorPickerPanel extends JPanel implements ColorListener, ModeListener {
     /**
      * The maximum size the graphic will be.  No matter
@@ -111,7 +112,7 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
      */
     private Point point = new Point(0, 0);
 
-    private final List<ChangeListener> changeListeners = new ArrayList<>();
+    private final Collection<ChangeListener> changeListeners = new ArrayList<>(1);
 
     /* Floats from [0,1].  They must be kept distinct, because
      * when you convert them to RGB coordinates HSB(0,0,0) and HSB (.5,0,0)
@@ -124,13 +125,13 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
     private int green = -1;
     private int blue = -1;
     private final FocusListener focusListener = new RepaintFocusListener(this);
-    private final BufferedImage image = new BufferedImage(ColorPickerPanel.MAX_SIZE, ColorPickerPanel.MAX_SIZE, BufferedImage.TYPE_INT_ARGB);
+    private final BufferedImage image = new BufferedImage(MAX_SIZE, MAX_SIZE, BufferedImage.TYPE_INT_ARGB);
     private final Insets imagePadding = new Insets(6, 6, 6, 6);
     private final KeyListener keyListener = new ColorPickerKeyListener();
     /**
      * A row of pixel data we recycle every time we regenerate this image.
      */
-    private final int[] row = new int[ColorPickerPanel.MAX_SIZE];
+    private final int[] row = new int[MAX_SIZE];
     private final MouseInputListener mouseListener = new ColorPickerMouseInputListener();
     private final ComponentListener componentListener = new ResizeListener();
     private final ColorListenerWrapper colorListenerWrapper;
@@ -139,22 +140,23 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
      * Creates a new {@code ColorPickerPanel}
      */
     public ColorPickerPanel() {
-        this.setMaximumSize(new Dimension(ColorPickerPanel.MAX_SIZE + this.imagePadding.left + this.imagePadding.right,
-            ColorPickerPanel.MAX_SIZE + this.imagePadding.top + this.imagePadding.bottom));
-        this.setPreferredSize(new Dimension((int) (ColorPickerPanel.MAX_SIZE * 0.75), (int) (ColorPickerPanel.MAX_SIZE * 0.75)));
+        setMaximumSize(new Dimension(
+            MAX_SIZE + imagePadding.left + imagePadding.right,
+            MAX_SIZE + imagePadding.top + imagePadding.bottom));
+        setPreferredSize(new Dimension((int) (MAX_SIZE * 0.75), (int) (MAX_SIZE * 0.75)));
 
-        this.setRGB(0, 0, 0);
-        this.addMouseListener(this.mouseListener);
-        this.addMouseMotionListener(this.mouseListener);
+        setRGB(0, 0, 0);
+        addMouseListener(mouseListener);
+        addMouseMotionListener(mouseListener);
 
-        this.setFocusable(true);
-        this.addKeyListener(this.keyListener);
-        this.addFocusListener(this.focusListener);
+        setFocusable(true);
+        addKeyListener(keyListener);
+        addFocusListener(focusListener);
 
-        this.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-        this.addComponentListener(this.componentListener);
+        setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+        addComponentListener(componentListener);
 
-        this.colorListenerWrapper = ColorListenerWrapper.withListener((colorModel) -> this.setRGB(colorModel.getRed(), colorModel.getGreen(), colorModel.getBlue()));
+        colorListenerWrapper = ColorListenerWrapper.withListener(colorModel -> setRGB(colorModel.getRed(), colorModel.getGreen(), colorModel.getBlue()));
 
     }
 
@@ -165,31 +167,31 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
      * @param changeListener The change listener to add
      */
     public void addChangeListener(ChangeListener changeListener) {
-        if (this.changeListeners.contains(changeListener)) {
+        if (changeListeners.contains(changeListener)) {
             return;
         }
-        this.changeListeners.add(changeListener);
+        changeListeners.add(changeListener);
     }
 
     /**
      * Remove a {@code ChangeListener} so it is no longer
      * notified when the selected color changes.
      *
-     * @param The change listener to remove
+     * @param changeListener The change listener to remove
      */
     public void removeChangeListener(ChangeListener changeListener) {
-        this.changeListeners.remove(changeListener);
+        changeListeners.remove(changeListener);
     }
 
     private void fireChangeListeners() {
-        if (this.changeListeners == null) {
+        if (changeListeners == null) {
             return;
         }
-        for (ChangeListener l : this.changeListeners) {
+        for (ChangeListener l : changeListeners) {
             try {
                 l.stateChanged(new ChangeEvent(this));
             } catch (RuntimeException e) {
-                e.printStackTrace();
+                log.error("Change listener threw exception", e);
             }
         }
     }
@@ -199,14 +201,14 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
         super.paint(g);
 
         Graphics2D g2 = (Graphics2D) g;
-        int size = Math.min(ColorPickerPanel.MAX_SIZE, Math.min(this.getWidth() - this.imagePadding.left - this.imagePadding.right, this.getHeight() - this.imagePadding.top - this.imagePadding.bottom));
+        int size = Math.min(MAX_SIZE, Math.min(getWidth() - imagePadding.left - imagePadding.right, getHeight() - imagePadding.top - imagePadding.bottom));
 
-        g2.translate(this.getWidth() / 2 - size / 2, this.getHeight() / 2 - size / 2);
+        g2.translate(getWidth() / 2 - size / 2, getHeight() / 2 - size / 2);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         Shape shape;
 
-        if (SATURATION.equals(this.mode) || BRIGHTNESS.equals(this.mode)) {
+        if (SATURATION == mode || BRIGHTNESS == mode) {
             shape = new Ellipse2D.Float(0, 0, size, size);
         } else {
             shape = new Rectangle(0, 0, size, size);
@@ -215,7 +217,7 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
         Painter painter = new Painter();
         painter.setGraphics2D(g2);
 
-        if (this.hasFocus()) {
+        if (hasFocus()) {
             painter.paintFocus(shape, 3);
         }
 
@@ -231,7 +233,7 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
             g2.translate(-2, -2);
         }
 
-        g2.drawImage(this.image, 0, 0, size, size, 0, 0, size, size, null);
+        g2.drawImage(image, 0, 0, size, size, 0, 0, size, size, null);
 
         g2.setStroke(new BasicStroke(1));
         if (shape instanceof Rectangle) {
@@ -244,29 +246,29 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
 
         g2.setColor(Color.white);
         g2.setStroke(new BasicStroke(1));
-        g2.draw(new Ellipse2D.Float(this.point.x - 3, this.point.y - 3, 6, 6));
+        g2.draw(new Ellipse2D.Float(point.x - 3, point.y - 3, 6, 6));
         g2.setColor(Color.black);
-        g2.draw(new Ellipse2D.Float(this.point.x - 4, this.point.y - 4, 8, 8));
+        g2.draw(new Ellipse2D.Float(point.x - 4, point.y - 4, 8, 8));
 
-        g.translate(-this.imagePadding.left, -this.imagePadding.top);
+        g.translate(-imagePadding.left, -imagePadding.top);
     }
 
     /**
      * Set the mode of this panel.
      *
      * @param mode This must be one of the following constants from the {@code ColorPicker} class:
-     *             <code>HUE</code>, <code>SATURATION</code>, <code>BRIGHTNESS</code>, <code>RED</code>, <code>GREEN</code>, or {@code BLUE}
+     *             {@code HUE}, <code>SATURATION</code>, <code>BRIGHTNESS</code>, <code>RED</code>, <code>GREEN</code>, or {@code BLUE}
      */
     public void setMode(ColorPickerMode mode) {
         Objects.nonNull(mode);
 
-        if (this.mode.equals(mode)) {
+        if (this.mode == mode) {
             return;
         }
 
         this.mode = mode;
-        this.regenerateImage();
-        this.regeneratePoint();
+        regenerateImage();
+        regeneratePoint();
     }
 
     /**
@@ -291,39 +293,37 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
             throw new IllegalArgumentException("The blue value (" + b + ") must be between [0,255].");
         }
 
-        if (this.red != r || this.green != g || this.blue != b) {
-            if (RED.equals(this.mode) ||
-                GREEN.equals(this.mode) ||
-                BLUE.equals(this.mode)) {
-                int lastR = this.red;
-                int lastG = this.green;
-                int lastB = this.blue;
-                this.red = r;
-                this.green = g;
-                this.blue = b;
+        if (red != r || green != g || blue != b) {
+            if (RED == mode || GREEN == mode || BLUE == mode) {
+                int lastR = red;
+                int lastG = green;
+                int lastB = blue;
+                red = r;
+                green = g;
+                blue = b;
 
-                if (RED.equals(this.mode)) {
+                if (RED == mode) {
                     if (lastR != r) {
-                        this.regenerateImage();
+                        regenerateImage();
                     }
-                } else if (GREEN.equals(this.mode)) {
+                } else if (GREEN == mode) {
                     if (lastG != g) {
-                        this.regenerateImage();
+                        regenerateImage();
                     }
-                } else if (BLUE.equals(this.mode)) {
+                } else if (BLUE == mode) {
                     if (lastB != b) {
-                        this.regenerateImage();
+                        regenerateImage();
                     }
                 }
             } else {
                 float[] hsb = new float[3];
                 Color.RGBtoHSB(r, g, b, hsb);
-                this.setHSB(hsb[0], hsb[1], hsb[2]);
+                setHSB(hsb[0], hsb[1], hsb[2]);
                 return;
             }
-            this.regeneratePoint();
-            this.repaint();
-            this.fireChangeListeners();
+            regeneratePoint();
+            repaint();
+            fireChangeListeners();
         }
     }
 
@@ -332,7 +332,7 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
      * Each value is between [0,1].
      */
     public float[] getHSB() {
-        return new float[]{this.hue, this.sat, this.bri};
+        return new float[]{hue, sat, bri};
     }
 
     /**
@@ -340,7 +340,7 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
      * Each value is between [0,255].
      */
     public int[] getRGB() {
-        return new int[]{this.red, this.green, this.blue};
+        return new int[]{red, green, blue};
     }
 
     /**
@@ -350,55 +350,52 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
      * @return the HSB values at the point provided.
      */
     private float[] getHSB(Point p) {
-        if (RED.equals(this.mode) || GREEN.equals(this.mode) ||
-            BLUE.equals(this.mode)) {
-            int[] rgb = this.getRGB(p);
+        if (RED == mode || GREEN == mode || BLUE == mode) {
+            int[] rgb = getRGB(p);
             return Color.RGBtoHSB(rgb[0], rgb[1], rgb[2], null);
         }
 
-        int size = Math.min(ColorPickerPanel.MAX_SIZE, Math.min(this.getWidth() - this.imagePadding.left - this.imagePadding.right, this.getHeight() - this.imagePadding.top - this.imagePadding.bottom));
-        p.translate(-(this.getWidth() / 2 - size / 2), -(this.getHeight() / 2 - size / 2));
-        if (BRIGHTNESS.equals(this.mode) || SATURATION.equals(this.mode)) {
+        int size = Math.min(MAX_SIZE, Math.min(getWidth() - imagePadding.left - imagePadding.right, getHeight() - imagePadding.top - imagePadding.bottom));
+        p.translate(-(getWidth() / 2 - size / 2), -(getHeight() / 2 - size / 2));
+        if (BRIGHTNESS == mode || SATURATION == mode) {
             //the two circular views:
             double radius = size / 2.0;
             double x = p.getX() - size / 2.0;
             double y = p.getY() - size / 2.0;
             double r = Math.sqrt(x * x + y * y) / radius;
-            double theta = StrictMath.atan2(y, x) / (Math.PI * 2.0);
 
             if (1 < r) {
                 r = 1;
             }
 
-            if (BRIGHTNESS.equals(this.mode)) {
+            double theta = StrictMath.atan2(y, x) / (Math.PI * 2.0);
+            if (BRIGHTNESS == mode) {
                 return new float[]{
                     (float) (theta + 0.25f),
                     (float) r,
-                    this.bri};
-            } else {
-                return new float[]{
-                    (float) (theta + 0.25f),
-                    this.sat,
-                    (float) r
-                };
+                    bri};
             }
-        } else {
-            float s = (float) p.x / size;
-            float b = (float) p.y / size;
-            if (0 > s) {
-                s = 0;
-            }
-            if (1 < s) {
-                s = 1;
-            }
-            if (0 > b) {
-                b = 0;
-            }
-            if (1 < b) {
-                b = 1;
-            }
-            return new float[]{this.hue, s, b};
+            return new float[]{
+                (float) (theta + 0.25f),
+                sat,
+                (float) r
+            };
         }
+        float s = (float) p.x / size;
+        float b = (float) p.y / size;
+        if (0 > s) {
+            s = 0;
+        }
+        if (1 < s) {
+            s = 1;
+        }
+        if (0 > b) {
+            b = 0;
+        }
+        if (1 < b) {
+            b = 1;
+        }
+        return new float[]{hue, s, b};
     }
 
     /**
@@ -408,9 +405,8 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
      * @return the RGB values at the point provided.
      */
     private int[] getRGB(Point p) {
-        if (BRIGHTNESS.equals(this.mode) || SATURATION.equals(this.mode) ||
-            HUE.equals(this.mode)) {
-            float[] hsb = this.getHSB(p);
+        if (BRIGHTNESS == mode || SATURATION == mode || HUE == mode) {
+            float[] hsb = getHSB(p);
             int rgb = Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
             int r = (rgb & 0xff0000) >> 16;
             int g = (rgb & 0xff00) >> 8;
@@ -418,8 +414,8 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
             return new int[]{r, g, b};
         }
 
-        int size = Math.min(ColorPickerPanel.MAX_SIZE, Math.min(this.getWidth() - this.imagePadding.left - this.imagePadding.right, this.getHeight() - this.imagePadding.top - this.imagePadding.bottom));
-        p.translate(-(this.getWidth() / 2 - size / 2), -(this.getHeight() / 2 - size / 2));
+        int size = Math.min(MAX_SIZE, Math.min(getWidth() - imagePadding.left - imagePadding.right, getHeight() - imagePadding.top - imagePadding.bottom));
+        p.translate(-(getWidth() / 2 - size / 2), -(getHeight() / 2 - size / 2));
 
         int x2 = p.x * 255 / size;
         int y2 = p.y * 255 / size;
@@ -436,13 +432,13 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
             y2 = 255;
         }
 
-        if (RED.equals(this.mode)) {
-            return new int[]{this.red, x2, y2};
-        } else if (GREEN.equals(this.mode)) {
-            return new int[]{x2, this.green, y2};
-        } else {
-            return new int[]{x2, y2, this.blue};
+        if (RED == mode) {
+            return new int[]{red, x2, y2};
         }
+        if (GREEN == mode) {
+            return new int[]{x2, green, y2};
+        }
+        return new int[]{x2, y2, blue};
     }
 
     /**
@@ -467,45 +463,43 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
             throw new IllegalArgumentException("The brightness value (" + b + ") must be between [0,1]");
         }
 
-        if (this.hue != h || this.sat != s || this.bri != b) {
-            if (HUE.equals(this.mode) ||
-                BRIGHTNESS.equals(this.mode) ||
-                SATURATION.equals(this.mode)) {
-                float lastHue = this.hue;
-                float lastBri = this.bri;
-                float lastSat = this.sat;
-                this.hue = h;
-                this.sat = s;
-                this.bri = b;
-                if (HUE.equals(this.mode)) {
-                    if (lastHue != this.hue) {
-                        this.regenerateImage();
+        if (hue != h || sat != s || bri != b) {
+            if (HUE == mode || BRIGHTNESS == mode || SATURATION == mode) {
+                float lastHue = hue;
+                float lastBri = bri;
+                float lastSat = sat;
+                hue = h;
+                sat = s;
+                bri = b;
+                if (HUE == mode) {
+                    if (lastHue != hue) {
+                        regenerateImage();
                     }
-                } else if (SATURATION.equals(this.mode)) {
-                    if (lastSat != this.sat) {
-                        this.regenerateImage();
+                } else if (SATURATION == mode) {
+                    if (lastSat != sat) {
+                        regenerateImage();
                     }
-                } else if (BRIGHTNESS.equals(this.mode)) {
-                    if (lastBri != this.bri) {
-                        this.regenerateImage();
+                } else if (BRIGHTNESS == mode) {
+                    if (lastBri != bri) {
+                        regenerateImage();
                     }
                 }
             } else {
 
                 Color c = new Color(Color.HSBtoRGB(h, s, b));
-                this.setRGB(c.getRed(), c.getGreen(), c.getBlue());
+                setRGB(c.getRed(), c.getGreen(), c.getBlue());
                 return;
             }
 
 
-            Color c = new Color(Color.HSBtoRGB(this.hue, this.sat, this.bri));
-            this.red = c.getRed();
-            this.green = c.getGreen();
-            this.blue = c.getBlue();
+            Color c = new Color(Color.HSBtoRGB(hue, sat, bri));
+            red = c.getRed();
+            green = c.getGreen();
+            blue = c.getBlue();
 
-            this.regeneratePoint();
-            this.repaint();
-            this.fireChangeListeners();
+            regeneratePoint();
+            repaint();
+            fireChangeListeners();
         }
     }
 
@@ -513,35 +507,35 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
      * Recalculates the (x,y) point used to indicate the selected color.
      */
     private void regeneratePoint() {
-        int size = Math.min(ColorPickerPanel.MAX_SIZE, Math.min(this.getWidth() - this.imagePadding.left - this.imagePadding.right, this.getHeight() - this.imagePadding.top - this.imagePadding.bottom));
-        if (HUE.equals(this.mode) || SATURATION.equals(this.mode) || BRIGHTNESS.equals(this.mode)) {
-            if (HUE.equals(this.mode)) {
-                this.point = new Point((int) (this.sat * size + 0.5), (int) (this.bri * size + 0.5));
-            } else if (SATURATION.equals(this.mode)) {
-                double theta = this.hue * 2 * Math.PI - Math.PI / 2;
+        int size = Math.min(MAX_SIZE, Math.min(getWidth() - imagePadding.left - imagePadding.right, getHeight() - imagePadding.top - imagePadding.bottom));
+        if (HUE == mode || SATURATION == mode || BRIGHTNESS == mode) {
+            if (HUE == mode) {
+                point = new Point((int) (sat * size + 0.5), (int) (bri * size + 0.5));
+            } else if (SATURATION == mode) {
+                double theta = hue * 2 * Math.PI - Math.PI / 2;
                 if (0 > theta) {
                     theta += 2 * Math.PI;
                 }
 
-                double r = this.bri * size / 2;
-                this.point = new Point((int) (r * StrictMath.cos(theta) + 0.5 + size / 2.0), (int) (r * StrictMath.sin(theta) + 0.5 + size / 2.0));
-            } else if (BRIGHTNESS.equals(this.mode)) {
-                double theta = this.hue * 2 * Math.PI - Math.PI / 2;
+                double r = bri * size / 2;
+                point = new Point((int) (r * StrictMath.cos(theta) + 0.5 + size / 2.0), (int) (r * StrictMath.sin(theta) + 0.5 + size / 2.0));
+            } else if (BRIGHTNESS == mode) {
+                double theta = hue * 2 * Math.PI - Math.PI / 2;
                 if (0 > theta) {
                     theta += 2 * Math.PI;
                 }
-                double r = this.sat * size / 2;
-                this.point = new Point((int) (r * StrictMath.cos(theta) + 0.5 + size / 2.0), (int) (r * StrictMath.sin(theta) + 0.5 + size / 2.0));
+                double r = sat * size / 2;
+                point = new Point((int) (r * StrictMath.cos(theta) + 0.5 + size / 2.0), (int) (r * StrictMath.sin(theta) + 0.5 + size / 2.0));
             }
-        } else if (RED.equals(this.mode)) {
-            this.point = new Point((int) (this.green * size / 255.0f + 0.49f),
-                (int) (this.blue * size / 255.0f + 0.49f));
-        } else if (GREEN.equals(this.mode)) {
-            this.point = new Point((int) (this.red * size / 255.0f + 0.49f),
-                (int) (this.blue * size / 255.0f + 0.49f));
-        } else if (BLUE.equals(this.mode)) {
-            this.point = new Point((int) (this.red * size / 255.0f + 0.49f),
-                (int) (this.green * size / 255.0f + 0.49f));
+        } else if (RED == mode) {
+            point = new Point((int) (green * size / 255.0f + 0.49f),
+                (int) (blue * size / 255.0f + 0.49f));
+        } else if (GREEN == mode) {
+            point = new Point((int) (red * size / 255.0f + 0.49f),
+                (int) (blue * size / 255.0f + 0.49f));
+        } else if (BLUE == mode) {
+            point = new Point((int) (red * size / 255.0f + 0.49f),
+                (int) (green * size / 255.0f + 0.49f));
         }
     }
 
@@ -549,9 +543,9 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
      * Regenerates the image.
      */
     private synchronized void regenerateImage() {
-        int size = Math.min(ColorPickerPanel.MAX_SIZE, Math.min(this.getWidth() - this.imagePadding.left - this.imagePadding.right, this.getHeight() - this.imagePadding.top - this.imagePadding.bottom));
+        int size = Math.min(MAX_SIZE, Math.min(getWidth() - imagePadding.left - imagePadding.right, getHeight() - imagePadding.top - imagePadding.bottom));
 
-        if (BRIGHTNESS.equals(this.mode) || SATURATION.equals(this.mode)) {
+        if (BRIGHTNESS == mode || SATURATION == mode) {
             float bri2 = bri;
             float sat2 = sat;
             float radius = size / 2.0f;
@@ -568,14 +562,14 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
                     double r = Math.sqrt(x2 * x2 + y2 * y2);
                     if (r <= radius) {
                         float hue2;
-                        if (BRIGHTNESS.equals(this.mode)) {
+                        if (BRIGHTNESS == mode) {
                             hue2 = (float) (theta / (2 * Math.PI));
                             sat2 = (float) (r / radius);
                         } else { //SATURATION
                             hue2 = (float) (theta / (2 * Math.PI));
                             bri2 = (float) (r / radius);
                         }
-                        this.row[x] = Color.HSBtoRGB(hue2, sat2, bri2);
+                        row[x] = Color.HSBtoRGB(hue2, sat2, bri2);
                         if (r > radius - k) {
                             int alpha = (int) (255 - 255 * (r - radius + k) / k);
                             if (0 > alpha) {
@@ -584,62 +578,62 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
                             if (255 < alpha) {
                                 alpha = 255;
                             }
-                            this.row[x] &= 0xffffff + (alpha << 24);
+                            row[x] &= 0xffffff + (alpha << 24);
                         }
                     } else {
-                        this.row[x] = 0x00000000;
+                        row[x] = 0x00000000;
                     }
                 }
-                this.image.getRaster().setDataElements(0, y, size, 1, this.row);
+                image.getRaster().setDataElements(0, y, size, 1, row);
             }
-        } else if (HUE.equals(this.mode)) {
+        } else if (HUE == mode) {
             float hue2 = hue;
             for (int y = 0; y < size; y++) {
                 float y2 = (float) y / size;
                 for (int x = 0; x < size; x++) {
                     float x2 = (float) x / size;
-                    this.row[x] = Color.HSBtoRGB(hue2, x2, y2);
+                    row[x] = Color.HSBtoRGB(hue2, x2, y2);
                 }
-                this.image.getRaster().setDataElements(0, y, this.image.getWidth(), 1, this.row);
+                image.getRaster().setDataElements(0, y, image.getWidth(), 1, row);
             }
         } else { //mode is RED, GREEN, or BLUE
-            int red2 = this.red;
-            int green2 = this.green;
-            int blue2 = this.blue;
+            int red2 = red;
+            int green2 = green;
+            int blue2 = blue;
             for (int y = 0; y < size; y++) {
                 float y2 = (float) y / size;
                 for (int x = 0; x < size; x++) {
                     float x2 = (float) x / size;
-                    if (RED.equals(this.mode)) {
+                    if (RED == mode) {
                         green2 = (int) (x2 * 255 + 0.49);
                         blue2 = (int) (y2 * 255 + 0.49);
-                    } else if (GREEN.equals(this.mode)) {
+                    } else if (GREEN == mode) {
                         red2 = (int) (x2 * 255 + 0.49);
                         blue2 = (int) (y2 * 255 + 0.49);
                     } else {
                         red2 = (int) (x2 * 255 + 0.49);
                         green2 = (int) (y2 * 255 + 0.49);
                     }
-                    this.row[x] = 0xFF000000 + (red2 << 16) + (green2 << 8) + blue2;
+                    row[x] = 0xFF000000 + (red2 << 16) + (green2 << 8) + blue2;
                 }
-                this.image.getRaster().setDataElements(0, y, size, 1, this.row);
+                image.getRaster().setDataElements(0, y, size, 1, row);
             }
         }
-        this.repaint();
+        repaint();
     }
 
     @Override
     public void modeChanged(ModeModel modeModel) {
-        this.setMode(modeModel.getMode());
+        setMode(modeModel.getMode());
     }
 
     @Override
     public void colorChanged(ColorModel colorModel) {
-        this.colorListenerWrapper.colorChanged(colorModel);
+        colorListenerWrapper.colorChanged(colorModel);
     }
 
     public void aboutToChangeColor() {
-        this.colorListenerWrapper.aboutToChangeValue();
+        colorListenerWrapper.aboutToChangeValue();
     }
 
     private class ColorPickerKeyListener extends KeyAdapter {
@@ -663,15 +657,15 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
                 multiplier = 5;
             }
             if (0 != dx || 0 != dy) {
-                int size = Math.min(ColorPickerPanel.MAX_SIZE, Math.min(ColorPickerPanel.this.getWidth() - ColorPickerPanel.this.imagePadding.left - ColorPickerPanel.this.imagePadding.right, ColorPickerPanel.this.getHeight() - ColorPickerPanel.this.imagePadding.top - ColorPickerPanel.this.imagePadding.bottom));
+                int size = Math.min(MAX_SIZE, Math.min(getWidth() - imagePadding.left - imagePadding.right, getHeight() - imagePadding.top - imagePadding.bottom));
 
-                int offsetX = ColorPickerPanel.this.getWidth() / 2 - size / 2;
-                int offsetY = ColorPickerPanel.this.getHeight() / 2 - size / 2;
-                ColorPickerPanel.this.mouseListener.mousePressed(new MouseEvent(ColorPickerPanel.this,
+                int offsetX = getWidth() / 2 - size / 2;
+                int offsetY = getHeight() / 2 - size / 2;
+                mouseListener.mousePressed(new MouseEvent(ColorPickerPanel.this,
                     MouseEvent.MOUSE_PRESSED,
                     System.currentTimeMillis(), 0,
-                    ColorPickerPanel.this.point.x + multiplier * dx + offsetX,
-                    ColorPickerPanel.this.point.y + multiplier * dy + offsetY,
+                    point.x + multiplier * dx + offsetX,
+                    point.y + multiplier * dy + offsetY,
                     1, false
                 ));
             }
@@ -681,21 +675,20 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
     private class ColorPickerMouseInputListener extends MouseInputAdapter {
         @Override
         public void mousePressed(MouseEvent e) {
-            ColorPickerPanel.this.requestFocus();
+            requestFocus();
             Point p = e.getPoint();
-            if (BRIGHTNESS.equals(ColorPickerPanel.this.mode) || SATURATION.equals(ColorPickerPanel.this.mode) ||
-                HUE.equals(ColorPickerPanel.this.mode)) {
-                float[] hsb = ColorPickerPanel.this.getHSB(p);
-                ColorPickerPanel.this.setHSB(hsb[0], hsb[1], hsb[2]);
+            if (BRIGHTNESS == mode || SATURATION == mode || HUE == mode) {
+                float[] hsb = getHSB(p);
+                setHSB(hsb[0], hsb[1], hsb[2]);
             } else {
-                int[] rgb = ColorPickerPanel.this.getRGB(p);
-                ColorPickerPanel.this.setRGB(rgb[0], rgb[1], rgb[2]);
+                int[] rgb = getRGB(p);
+                setRGB(rgb[0], rgb[1], rgb[2]);
             }
         }
 
         @Override
         public void mouseDragged(MouseEvent e) {
-            this.mousePressed(e);
+            mousePressed(e);
         }
     }
 
@@ -703,8 +696,8 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
 
         @Override
         public void componentResized(ComponentEvent e) {
-            ColorPickerPanel.this.regeneratePoint();
-            ColorPickerPanel.this.regenerateImage();
+            regeneratePoint();
+            regenerateImage();
         }
 
     }

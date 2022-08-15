@@ -2,7 +2,6 @@ package com.bric.colorpicker.models;
 
 import com.bric.colorpicker.ColorPickerMode;
 import com.bric.colorpicker.listeners.ModeListener;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -16,7 +15,7 @@ public class ModeModel {
     }
 
     public ColorPickerMode getMode() {
-        return this.mode;
+        return mode;
     }
 
     public void setMode(ColorPickerMode mode) {

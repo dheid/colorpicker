@@ -6,14 +6,14 @@
  * Copyright (c) 2011 by Jeremy Wood.
  * All rights reserved.
  *
- * The copyright of this software is owned by Jeremy Wood. 
- * You may not use, copy or modify this software, except in  
- * accordance with the license agreement you entered into with  
+ * The copyright of this software is owned by Jeremy Wood.
+ * You may not use, copy or modify this software, except in
+ * accordance with the license agreement you entered into with
  * Jeremy Wood. For details see accompanying license terms.
- * 
+ *
  * This software is probably, but not necessarily, discussed here:
  * https://javagraphics.java.net/
- * 
+ *
  * That site should also contain the most recent official version
  * of this software.  (See the SVN repository for more details.)
  */
@@ -21,9 +21,6 @@ package com.bric.colorpicker;
 
 import com.bric.colorpicker.parts.DialogFooter;
 import com.bric.colorpicker.parts.EscapeKeyBehavior;
-
-import javax.swing.JComponent;
-import javax.swing.JDialog;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
@@ -35,6 +32,8 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
 
 /**
  * This wraps a {@code ColorPicker} in a simple dialog with "OK" and "Cancel" options.
@@ -95,7 +94,7 @@ public class ColorPickerDialog extends JDialog {
         }
         dialog.pack();
         dialog.setVisible(true);
-        return dialog.getColor();
+        return dialog.returnValue;
     }
 
 

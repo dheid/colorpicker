@@ -36,19 +36,18 @@ import com.bric.colorpicker.options.SaturationOption;
 import com.bric.colorpicker.parts.ColorSwatch;
 import com.bric.colorpicker.parts.HexField;
 import com.bric.colorpicker.parts.OpacitySlider;
-
-import javax.swing.ButtonGroup;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.ResourceBundle;
+import javax.swing.ButtonGroup;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 
 /**
  * <p>This is a panel that offers a robust set of controls to pick a color.
@@ -118,12 +117,12 @@ public class ColorPicker extends JPanel {
     private final Option greenOption = new GreenOption();
     private final Option blueOption = new BlueOption();
     private final ColorSwatch preview = new ColorSwatch(50);
-    private final JLabel hexLabel = new JLabel(ColorPicker.strings.getObject("hexLabel").toString());
+    private final JLabel hexLabel = new JLabel(strings.getObject("hexLabel").toString());
     private final HexField hexField = new HexField();
     private final JPanel expertControls = new JPanel(new GridBagLayout());
     private final ColorPickerPanel colorPanel = new ColorPickerPanel();
     private final OpacitySlider opacitySlider = new OpacitySlider();
-    private final JLabel opacityLabel = new JLabel(ColorPicker.strings.getObject("opacityLabel").toString());
+    private final JLabel opacityLabel = new JLabel(strings.getObject("opacityLabel").toString());
 
     /**
      * Create a new {@code ColorPicker} with all controls visible except opacity.
@@ -145,7 +144,7 @@ public class ColorPicker extends JPanel {
     public ColorPicker(boolean showExpertControls, boolean includeOpacity) {
         super(new GridBagLayout());
 
-        this.initNames();
+        initNames();
 
         GridBagConstraints constraints = new GridBagConstraints();
 
@@ -160,7 +159,7 @@ public class ColorPicker extends JPanel {
         ButtonGroup buttonGroup = new ButtonGroup();
 
         Option[] options = {
-            this.hueOption, this.saturationOption, this.brightnessOption, this.redOption, this.greenOption, this.blueOption
+            hueOption, saturationOption, brightnessOption, redOption, greenOption, blueOption
         };
 
         for (int optionIndex = 0; optionIndex < options.length; optionIndex++) {
@@ -174,14 +173,14 @@ public class ColorPicker extends JPanel {
         constraints.insets = new Insets(normalInsets.top + 10, normalInsets.left, normalInsets.bottom, normalInsets.right);
         constraints.anchor = GridBagConstraints.LINE_END;
         constraints.fill = GridBagConstraints.NONE;
-        optionsPanel.add(this.hexLabel, constraints);
+        optionsPanel.add(hexLabel, constraints);
 
         constraints.gridx++;
         constraints.anchor = GridBagConstraints.LINE_START;
         constraints.fill = GridBagConstraints.HORIZONTAL;
-        optionsPanel.add(this.hexField, constraints);
+        optionsPanel.add(hexField, constraints);
 
-        this.alphaOption.addTo(optionsPanel, constraints);
+        alphaOption.addTo(optionsPanel, constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -191,7 +190,7 @@ public class ColorPicker extends JPanel {
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.insets = normalInsets;
         constraints.gridwidth = 2;
-        this.add(this.colorPanel, constraints);
+        add(colorPanel, constraints);
 
         constraints.gridwidth = 1;
         constraints.insets = normalInsets;
@@ -199,14 +198,14 @@ public class ColorPicker extends JPanel {
         constraints.weighty = 1;
         constraints.fill = GridBagConstraints.VERTICAL;
         constraints.weightx = 0;
-        this.add(this.slider, constraints);
+        add(slider, constraints);
 
         constraints.gridx++;
         constraints.fill = GridBagConstraints.VERTICAL;
         constraints.gridheight = GridBagConstraints.REMAINDER;
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.insets = new Insets(0, 0, 0, 0);
-        this.add(this.expertControls, constraints);
+        add(expertControls, constraints);
 
         constraints.gridx = 0;
         constraints.gridheight = 1;
@@ -215,13 +214,13 @@ public class ColorPicker extends JPanel {
         constraints.weighty = 0;
         constraints.insets = normalInsets;
         constraints.anchor = GridBagConstraints.CENTER;
-        this.add(this.opacityLabel, constraints);
+        add(opacityLabel, constraints);
 
         constraints.gridx++;
         constraints.gridwidth = 2;
         constraints.weightx = 1;
         constraints.fill = GridBagConstraints.HORIZONTAL;
-        this.add(this.opacitySlider, constraints);
+        add(opacitySlider, constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 0;
@@ -232,38 +231,38 @@ public class ColorPicker extends JPanel {
         constraints.weightx = 1;
         constraints.anchor = GridBagConstraints.PAGE_START;
         constraints.insets = new Insets(normalInsets.top, normalInsets.left + 8, normalInsets.bottom + 10, normalInsets.right + 8);
-        this.expertControls.add(this.preview, constraints);
+        expertControls.add(preview, constraints);
 
         constraints.gridy++;
         constraints.weighty = 0;
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.insets = new Insets(normalInsets.top, normalInsets.left, 0, normalInsets.right);
-        this.expertControls.add(optionsPanel, constraints);
+        expertControls.add(optionsPanel, constraints);
 
-        this.initializeColorPanel();
-        this.initializeSlider();
-        this.initializePreview();
-        this.initializeHexField();
+        initializeColorPanel();
+        initializeSlider();
+        initializePreview();
+        initializeHexField();
 
-        this.initialize(this.hueOption);
-        this.initialize(this.saturationOption);
-        this.initialize(this.brightnessOption);
+        initialize(hueOption);
+        initialize(saturationOption);
+        initialize(brightnessOption);
 
-        this.initialize(this.redOption);
-        this.initialize(this.greenOption);
-        this.initialize(this.blueOption);
+        initialize(redOption);
+        initialize(greenOption);
+        initialize(blueOption);
 
-        this.initializeOpacitySlider();
-        this.initialize(this.alphaOption);
+        initializeOpacitySlider();
+        initialize(alphaOption);
 
-        this.setExpertControlsVisible(showExpertControls);
+        setExpertControlsVisible(showExpertControls);
 
-        this.setOpacityVisible(includeOpacity);
+        setOpacityVisible(includeOpacity);
 
-        ColorPicker.setOpaque(this, false);
+        setOpaque(this, false);
 
-        this.setColor(Color.BLACK);
-        this.setMode(ColorPickerMode.BRIGHTNESS);
+        setColor(Color.BLACK);
+        setMode(ColorPickerMode.BRIGHTNESS);
     }
 
     private static void setOpaque(JComponent jc, boolean opaque) {
@@ -278,7 +277,7 @@ public class ColorPicker extends JPanel {
 
         for (int a = 0; a < jc.getComponentCount(); a++) {
             JComponent child = (JComponent) jc.getComponent(a);
-            ColorPicker.setOpaque(child, opaque);
+            setOpaque(child, opaque);
         }
     }
 
@@ -293,138 +292,138 @@ public class ColorPicker extends JPanel {
     }
 
     private void initialize(Option option) {
-        this.colorModel.addColorListener(option);
+        colorModel.addColorListener(option);
         option.addSpinnerChangeListener(e -> {
-            if (this.colorModel.isChanging()) {
+            if (colorModel.isChanging()) {
                 return;
             }
             option.aboutToChangeColor();
-            option.update(this.colorModel);
+            option.update(colorModel);
         });
 
-        this.modeModel.addListener(option);
+        modeModel.addListener(option);
         option.addRadioActionListener(e -> {
-            if (this.colorModel.isChanging()) {
+            if (colorModel.isChanging()) {
                 return;
             }
             option.aboutToChangeMode();
-            option.update(this.modeModel);
+            option.update(modeModel);
         });
 
         option.addFocusListener(new SelectAllListener());
     }
 
     private void initializeOpacitySlider() {
-        this.colorModel.addColorListener(this.opacitySlider);
-        this.opacitySlider.addChangeListener(e -> {
-            if (!this.opacitySlider.getValueIsAdjusting()) {
-                if (this.colorModel.isChanging()) {
+        colorModel.addColorListener(opacitySlider);
+        opacitySlider.addChangeListener(e -> {
+            if (!opacitySlider.getValueIsAdjusting()) {
+                if (colorModel.isChanging()) {
                     return;
                 }
-                this.opacitySlider.aboutToChangeColor();
-                this.colorModel.setAlpha(this.opacitySlider.getValue());
+                opacitySlider.aboutToChangeColor();
+                colorModel.setAlpha(opacitySlider.getValue());
             }
         });
     }
 
     private void initializeHexField() {
-        this.colorModel.addColorListener(this.hexField);
+        colorModel.addColorListener(hexField);
         HexFieldListener hexFieldListener = new HexFieldListener();
-        hexFieldListener.setColorModel(this.colorModel);
-        hexFieldListener.setHexField(this.hexField);
-        this.hexField.getDocument().addDocumentListener(hexFieldListener);
-        this.hexField.addFocusListener(new SelectAllListener());
+        hexFieldListener.setColorModel(colorModel);
+        hexFieldListener.setHexField(hexField);
+        hexField.getDocument().addDocumentListener(hexFieldListener);
+        hexField.addFocusListener(new SelectAllListener());
     }
 
     private void initializePreview() {
-        this.preview.setOpaque(true);
-        this.colorModel.addColorListener(this.preview);
+        preview.setOpaque(true);
+        colorModel.addColorListener(preview);
     }
 
     private void initializeColorPanel() {
-        int height = this.expertControls.getPreferredSize().height;
-        this.colorPanel.setPreferredSize(new Dimension(height, height));
+        int height = expertControls.getPreferredSize().height;
+        colorPanel.setPreferredSize(new Dimension(height, height));
 
-        this.colorModel.addColorListener(this.colorPanel);
-        this.modeModel.addListener(this.colorPanel);
+        colorModel.addColorListener(colorPanel);
+        modeModel.addListener(colorPanel);
 
-        this.colorPanel.addChangeListener(e -> {
-            if (this.colorModel.isChanging()) {
+        colorPanel.addChangeListener(e -> {
+            if (colorModel.isChanging()) {
                 return;
             }
-            int[] rgb = this.colorPanel.getRGB();
-            this.colorPanel.aboutToChangeColor();
-            this.colorModel.setColor(new Color(rgb[0], rgb[1], rgb[2]));
+            int[] rgb = colorPanel.getRGB();
+            colorPanel.aboutToChangeColor();
+            colorModel.setColor(new Color(rgb[0], rgb[1], rgb[2]));
         });
     }
 
     private void initializeSlider() {
-        this.colorModel.addColorListener(this.slider);
-        this.modeModel.addListener(this.slider);
-        this.slider.addChangeListener(e -> {
-            if (!this.slider.getValueIsAdjusting()) {
-                if (this.colorModel.isChanging()) {
+        colorModel.addColorListener(slider);
+        modeModel.addListener(slider);
+        slider.addChangeListener(e -> {
+            if (!slider.getValueIsAdjusting()) {
+                if (colorModel.isChanging()) {
                     return;
                 }
-                this.slider.aboutToChangeColor();
-                ColorPickerMode mode = this.modeModel.getMode();
+                slider.aboutToChangeColor();
+                ColorPickerMode mode = modeModel.getMode();
                 switch (mode) {
                     case HUE:
-                        this.colorModel.setHue(this.slider.getValue() / (float) mode.getMax());
+                        colorModel.setHue(slider.getValue() / (float) mode.getMax());
                         break;
                     case BRIGHTNESS:
-                        this.colorModel.setBrightness(this.slider.getValue() / (float) mode.getMax());
+                        colorModel.setBrightness(slider.getValue() / (float) mode.getMax());
                         break;
                     case SATURATION:
-                        this.colorModel.setSaturation(this.slider.getValue() / (float) mode.getMax());
+                        colorModel.setSaturation(slider.getValue() / (float) mode.getMax());
                         break;
                     case RED:
-                        this.colorModel.setRed(this.slider.getValue());
+                        colorModel.setRed(slider.getValue());
                         break;
                     case GREEN:
-                        this.colorModel.setGreen(this.slider.getValue());
+                        colorModel.setGreen(slider.getValue());
                         break;
                     case BLUE:
-                        this.colorModel.setBlue(this.slider.getValue());
+                        colorModel.setBlue(slider.getValue());
                         break;
                 }
             }
         });
-        this.slider.setUI(new ColorSliderUI(this.slider, this));
+        slider.setUI(new ColorSliderUI(slider, this));
     }
 
     /**
      * @return the currently selected {@code Option}
      */
     public Option getSelectedOption() {
-        ColorPickerMode mode = this.getMode();
+        ColorPickerMode mode = getMode();
 
         switch (mode) {
             case HUE:
-                return this.hueOption;
+                return hueOption;
             case SATURATION:
-                return this.saturationOption;
+                return saturationOption;
             case BRIGHTNESS:
-                return this.brightnessOption;
+                return brightnessOption;
             case RED:
-                return this.redOption;
+                return redOption;
             case GREEN:
-                return this.greenOption;
+                return greenOption;
             case BLUE:
-                return this.blueOption;
+                return blueOption;
             default:
                 return null;
         }
     }
 
     private void initNames() {
-        this.hexField.setName("Hex");
-        this.hueOption.setName("Hue");
-        this.saturationOption.setName("Saturation");
-        this.brightnessOption.setName("Brightness");
-        this.redOption.setName("Red");
-        this.greenOption.setName("Green");
-        this.blueOption.setName("Blue");
+        hexField.setName("Hex");
+        hueOption.setName("Hue");
+        saturationOption.setName("Saturation");
+        brightnessOption.setName("Brightness");
+        redOption.setName("Red");
+        greenOption.setName("Green");
+        blueOption.setName("Blue");
     }
 
     /**
@@ -435,8 +434,8 @@ public class ColorPicker extends JPanel {
      * @param hexControlsVisible Enables or disables visibility
      */
     public void setHexControlsVisible(boolean hexControlsVisible) {
-        this.hexLabel.setVisible(hexControlsVisible);
-        this.hexField.setVisible(hexControlsVisible);
+        hexLabel.setVisible(hexControlsVisible);
+        hexField.setVisible(hexControlsVisible);
     }
 
     /**
@@ -448,7 +447,7 @@ public class ColorPicker extends JPanel {
      *
      */
     public void setPreviewSwatchVisible(boolean previewSwatchVisible) {
-        this.preview.setVisible(previewSwatchVisible);
+        preview.setVisible(previewSwatchVisible);
     }
 
     /**
@@ -460,7 +459,7 @@ public class ColorPicker extends JPanel {
      * @param b whether to show or hide the expert controls.
      */
     public void setExpertControlsVisible(boolean b) {
-        this.expertControls.setVisible(b);
+        expertControls.setVisible(b);
     }
 
     /**
@@ -472,24 +471,24 @@ public class ColorPicker extends JPanel {
      * @param visible should controls be visible or not
      */
     public void setModeControlsVisible(boolean visible) {
-        this.hueOption.setRadioButtonVisible(visible && this.hueOption.isVisible());
-        this.saturationOption.setRadioButtonVisible(visible && this.saturationOption.isVisible());
-        this.brightnessOption.setRadioButtonVisible(visible && this.brightnessOption.isVisible());
-        this.redOption.setRadioButtonVisible(visible && this.redOption.isVisible());
-        this.greenOption.setRadioButtonVisible(visible && this.greenOption.isVisible());
-        this.blueOption.setRadioButtonVisible(visible && this.blueOption.isVisible());
-        this.putClientProperty(ColorPicker.MODE_CONTROLS_VISIBLE_PROPERTY, visible);
+        hueOption.setRadioButtonVisible(visible && hueOption.isVisible());
+        saturationOption.setRadioButtonVisible(visible && saturationOption.isVisible());
+        brightnessOption.setRadioButtonVisible(visible && brightnessOption.isVisible());
+        redOption.setRadioButtonVisible(visible && redOption.isVisible());
+        greenOption.setRadioButtonVisible(visible && greenOption.isVisible());
+        blueOption.setRadioButtonVisible(visible && blueOption.isVisible());
+        putClientProperty(MODE_CONTROLS_VISIBLE_PROPERTY, visible);
     }
 
     /**
      * @return the current mode of this {@code ColorPicker}.
-     * <BR>This will return <code>HUE</code>,  {@code SATURATION},  {@code BRIGHTNESS},
-     * <code>RED</code>,  {@code GREEN}, or {@code BLUE}.
+     * <BR>This will return {@code HUE},  {@code SATURATION},  {@code BRIGHTNESS},
+     * {@code RED},  {@code GREEN}, or {@code BLUE}.
      * <P>The default mode is {@code BRIGHTNESS}, because that provides the most
      * aesthetic/recognizable color wheel.
      */
     public ColorPickerMode getMode() {
-        return this.modeModel.getMode();
+        return modeModel.getMode();
     }
 
     /**
@@ -503,7 +502,7 @@ public class ColorPicker extends JPanel {
         if (mode == null) {
             throw new IllegalArgumentException("mode must not be null");
         }
-        this.modeModel.setMode(mode);
+        modeModel.setMode(mode);
     }
 
     /**
@@ -514,14 +513,14 @@ public class ColorPicker extends JPanel {
      * @param b the blueOption value.  Must be between [0,255].
      */
     public void setRGB(int r, int g, int b) {
-        this.setColor(new Color(r, g, b));
+        setColor(new Color(r, g, b));
     }
 
     /**
      * @return the current {@code Color} this {@code ColorPicker} has selected.
      */
     public Color getColor() {
-        return this.colorModel.getColor();
+        return colorModel.getColor();
     }
 
     /**
@@ -530,9 +529,9 @@ public class ColorPicker extends JPanel {
      * @param newColor the new color to use.
      */
     public void setColor(Color newColor) {
-        Color lastColor = this.colorModel.getColor();
-        this.colorModel.setColor(newColor);
-        this.firePropertyChange(ColorPicker.SELECTED_COLOR_PROPERTY, lastColor, newColor);
+        Color lastColor = colorModel.getColor();
+        colorModel.setColor(newColor);
+        firePropertyChange(SELECTED_COLOR_PROPERTY, lastColor, newColor);
     }
 
     /**
@@ -545,7 +544,7 @@ public class ColorPicker extends JPanel {
      * @return the panel with several rows of spinner controls.
      */
     public JPanel getExpertControls() {
-        return this.expertControls;
+        return expertControls;
     }
 
     /**
@@ -556,14 +555,14 @@ public class ColorPicker extends JPanel {
      * @param b whether the controls should be visible or not.
      */
     public void setRGBControlsVisible(boolean b) {
-        boolean radioButtonsAllowed = this.areRadioButtonsAllowed();
-        this.redOption.setVisible(b, radioButtonsAllowed);
-        this.greenOption.setVisible(b, radioButtonsAllowed);
-        this.blueOption.setVisible(b, radioButtonsAllowed);
+        boolean radioButtonsAllowed = areRadioButtonsAllowed();
+        redOption.setVisible(b, radioButtonsAllowed);
+        greenOption.setVisible(b, radioButtonsAllowed);
+        blueOption.setVisible(b, radioButtonsAllowed);
     }
 
     private boolean areRadioButtonsAllowed() {
-        Boolean z = (Boolean) this.getClientProperty(ColorPicker.MODE_CONTROLS_VISIBLE_PROPERTY);
+        Boolean z = (Boolean) getClientProperty(MODE_CONTROLS_VISIBLE_PROPERTY);
         if (z != null) {
             return z;
         }
@@ -578,10 +577,10 @@ public class ColorPicker extends JPanel {
      * @param b whether the controls should be visible or not.
      */
     public void setHSBControlsVisible(boolean b) {
-        boolean radioButtonsAllowed = this.areRadioButtonsAllowed();
-        this.hueOption.setVisible(b, radioButtonsAllowed);
-        this.saturationOption.setVisible(b, radioButtonsAllowed);
-        this.brightnessOption.setVisible(b, radioButtonsAllowed);
+        boolean radioButtonsAllowed = areRadioButtonsAllowed();
+        hueOption.setVisible(b, radioButtonsAllowed);
+        saturationOption.setVisible(b, radioButtonsAllowed);
+        brightnessOption.setVisible(b, radioButtonsAllowed);
     }
 
     /**
@@ -593,17 +592,17 @@ public class ColorPicker extends JPanel {
      * @param visible should opacity controls be visible
      */
     public final void setOpacityVisible(boolean visible) {
-        this.opacityLabel.setVisible(visible);
-        this.opacitySlider.setVisible(visible);
-        this.alphaOption.setLabelVisible(visible);
-        this.alphaOption.setSpinnerVisible(visible);
+        opacityLabel.setVisible(visible);
+        opacitySlider.setVisible(visible);
+        alphaOption.setLabelVisible(visible);
+        alphaOption.setSpinnerVisible(visible);
     }
 
     /**
      * @return the {@code ColorPickerPanel} this {@code ColorPicker} displays.
      */
     public ColorPickerPanel getColorPanel() {
-        return this.colorPanel;
+        return colorPanel;
     }
 
     /**
@@ -615,11 +614,11 @@ public class ColorPicker extends JPanel {
      */
     public void setHSB(float h, float s, float b) {
 
-        ColorPicker.requireValidFloat(h, "hue");
-        ColorPicker.requireValidFloat(s, "saturation");
-        ColorPicker.requireValidFloat(b, "brightness");
+        requireValidFloat(h, "hue");
+        requireValidFloat(s, "saturation");
+        requireValidFloat(b, "brightness");
 
-        this.setColor(Color.getHSBColor(h, s, b));
+        setColor(Color.getHSBColor(h, s, b));
     }
 
     /**
@@ -627,14 +626,14 @@ public class ColorPicker extends JPanel {
      * @see Color
      */
     public float[] getHSB() {
-        return this.colorModel.getHSB();
+        return colorModel.getHSB();
     }
 
     /**
      * @return the current RGB coordinates of this ColorPicker. Each value is between [0,255].
      */
     public int[] getRGB() {
-        return this.colorModel.getRGB();
+        return colorModel.getRGB();
     }
 
     /**
@@ -643,15 +642,15 @@ public class ColorPicker extends JPanel {
      * @param opacity an int between 0 and 255.
      */
     public void setOpacity(int opacity) {
-        this.setColor(new Color(this.colorModel.getRed(), this.colorModel.getGreen(), this.colorModel.getBlue(), opacity));
+        setColor(new Color(colorModel.getRed(), colorModel.getGreen(), colorModel.getBlue(), opacity));
     }
 
     public void addColorListener(ColorListener listener) {
-        this.colorModel.addColorListener(listener);
+        colorModel.addColorListener(listener);
     }
 
     public void removeColorListener(ColorListener listener) {
-        this.colorModel.removeColorListener(listener);
+        colorModel.removeColorListener(listener);
     }
 
 }
