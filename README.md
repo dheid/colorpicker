@@ -2,6 +2,7 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/org.drjekyll/colorpicker.svg?maxAge=2592000)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.drjekyll%22%20AND%20a%3A%22colorpicker%22)
 [![Java CI with Maven](https://github.com/dheid/colorpicker/actions/workflows/build.yml/badge.svg)](https://github.com/dheid/fontchooser/actions/workflows/build.yml)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/W7W3EER56)
 
 A nice color picker using Java Swing that contains a visual color selection and input boxes to enter RGB and HSB values manually:
 
