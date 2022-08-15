@@ -26,7 +26,7 @@ Include the following dependency to your project:
 <dependency>
   <groupId>org.drjekyll</groupId>
   <artifactId>colorpicker</artifactId>
-  <version>1.4.0</version>
+  <version>1.4.2</version>
 </dependency>
 ```
 
@@ -51,20 +51,20 @@ This will install the version to your local repository. You can now include it:
 <dependency>
     <groupId>org.drjekyll</groupId>
     <artifactId>colorpicker</artifactId>
-    <version>1.4.1-SNAPSHOT</version>
+    <version>1.4.3-SNAPSHOT</version>
  </dependency>
 ```
 
 or Gradle with Groovy DSL:
 
 ```groovy
-implementation 'org.drjekyll:fontchooser:1.4.1-SNAPSHOT'
+implementation 'org.drjekyll:fontchooser:1.4.3-SNAPSHOT'
 ```
 
 or Gradle with Kotlin DSL:
 
 ```kotlin
-implementation("org.drjekyll:fontchooser:1.4.1-SNAPSHOT")
+implementation("org.drjekyll:fontchooser:1.4.3-SNAPSHOT")
 ```
 
 
