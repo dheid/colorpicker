@@ -19,15 +19,15 @@ jobs:
       - run: |
           git config user.email "matomo-tracker@daniel-heid.de"
           git config user.name "Daniel Heid"
+      - id: version
+        run: |
+          VERSION=$( mvn -B help:evaluate -Dexpression=project.version -q -DforceStdout )
+          echo "::set-output name=version::${VERSION#-SNAPSHOT}"
       - run: mvn -B release:prepare release:perform
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-      - id: version
-        run: |
-          VERSION=$( mvn -B help:evaluate -Dexpression=project.version -q -DforceStdout )
-          echo "::set-output name=version::$VERSION"
       - uses: release-drafter/release-drafter@v5
         with:
           version: ${{ steps.version.outputs.version }}
