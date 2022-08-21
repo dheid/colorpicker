@@ -23,7 +23,9 @@ jobs:
         run: |
           VERSION=$( mvn -B help:evaluate -Dexpression=project.version -q -DforceStdout )
           echo "::set-output name=version::${VERSION#-SNAPSHOT}"
-      - run: mvn -B release:prepare release:perform
+      - uses: GabrielBB/xvfb-action@v1
+        with:
+          run: mvn -B release:prepare release:perform
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}

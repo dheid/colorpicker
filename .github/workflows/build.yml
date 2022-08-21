@@ -19,5 +19,6 @@ jobs:
           java-version: '8'
           distribution: 'temurin'
           cache: maven
-      - run: mvn -B verify
-
+      - uses: GabrielBB/xvfb-action@v1
+        with:
+          run: mvn -B verify
