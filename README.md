@@ -85,7 +85,11 @@ https://opensource.org/licenses/BSD-3-Clause
 
 ## :loudspeaker: Release Notes
 
-### 1.4.0
+### 1.4.3
+
+Fixed null-pointer exception on changing slider
+
+### 1.4.2
 
 * Introduced Lombok
 * Migrated to JUnit 5
