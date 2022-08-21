@@ -4,13 +4,17 @@ import java.awt.event.MouseEvent;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.event.MouseInputAdapter;
+import javax.swing.plaf.basic.BasicSliderUI;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class SliderMouseListener extends MouseInputAdapter {
 
-    private final ColorSliderUI colorSliderUI;
+    @NonNull
+    private final BasicSliderUI sliderUi;
 
+    @NonNull
     private final JSlider slider;
 
     @Override
@@ -23,10 +27,10 @@ public class SliderMouseListener extends MouseInputAdapter {
         int v;
         if (slider.getOrientation() == SwingConstants.HORIZONTAL) {
             int x = e.getX();
-            v = colorSliderUI.valueForXPosition(x);
+            v = sliderUi.valueForXPosition(x);
         } else {
             int y = e.getY();
-            v = colorSliderUI.valueForYPosition(y);
+            v = sliderUi.valueForYPosition(y);
         }
         slider.setValue(v);
     }

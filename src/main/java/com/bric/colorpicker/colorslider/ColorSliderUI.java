@@ -39,32 +39,36 @@ import java.awt.image.WritableRaster;
 import javax.swing.JSlider;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.plaf.basic.BasicSliderUI;
+import lombok.NonNull;
 
 /**
- * This is a SliderUI designed specifically for the
- * {@code ColorPicker}.
+ * This is a SliderUI designed specifically for the {@code ColorPicker}.
  */
 public class ColorSliderUI extends BasicSliderUI {
+
     private final ColorPicker colorPicker;
+
     /**
      * Half of the height of the arrow
      */
     private static final int ARROW_HALF = 8;
-    private final int[] intArray = new int[Toolkit.getDefaultToolkit().getScreenSize().height];
-    private final BufferedImage image = new BufferedImage(1, intArray.length, BufferedImage.TYPE_INT_RGB);
-    /**
-     * This overrides the default behavior for this colorslider
-     * and sets the thumb to where the user clicked.
-     * From a design standpoint, users probably don't want to
-     * scroll through several colors to get where they clicked:
-     * they simply want the color they selected.
-     */
-    private final MouseInputAdapter myMouseListener = new SliderMouseListener(this, this.slider);
 
-    public ColorSliderUI(JSlider b, ColorPicker cp) {
-        super(b);
-        colorPicker = cp;
-        ColorPickerPanel colorPanel = cp.getColorPanel();
+    private final int[] intArray = new int[Toolkit.getDefaultToolkit().getScreenSize().height];
+
+    private final BufferedImage image =
+        new BufferedImage(1, intArray.length, BufferedImage.TYPE_INT_RGB);
+
+    /**
+     * This overrides the default behavior for this color slider and sets the thumb to where the
+     * user clicked. From a design standpoint, users probably don't want to scroll through several
+     * colors to get where they clicked: they simply want the color they selected.
+     */
+    private MouseInputAdapter mouseInputAdapter;
+
+    public ColorSliderUI(@NonNull JSlider slider, @NonNull ColorPicker colorPicker) {
+        super(slider);
+        this.colorPicker = colorPicker;
+        ColorPickerPanel colorPanel = colorPicker.getColorPanel();
         colorPanel.addComponentListener(new ResizeListener());
     }
 
@@ -175,20 +179,26 @@ public class ColorSliderUI extends BasicSliderUI {
         super.installListeners(slider);
         slider.removeMouseListener(trackListener);
         slider.removeMouseMotionListener(trackListener);
-        slider.addMouseListener(myMouseListener);
-        slider.addMouseMotionListener(myMouseListener);
+        if (mouseInputAdapter == null) {
+            mouseInputAdapter = new SliderMouseListener(this, slider);
+            slider.addMouseListener(mouseInputAdapter);
+            slider.addMouseMotionListener(mouseInputAdapter);
+        }
         slider.setOpaque(false);
     }
 
     @Override
     protected void uninstallListeners(JSlider slider) {
         super.uninstallListeners(slider);
-        slider.removeMouseListener(myMouseListener);
-        slider.removeMouseMotionListener(myMouseListener);
+        if (mouseInputAdapter != null) {
+            slider.removeMouseListener(mouseInputAdapter);
+            slider.removeMouseMotionListener(mouseInputAdapter);
+        }
     }
 
 
     private class ResizeListener extends ComponentAdapter {
+
         ResizeListener() {
         }
 
