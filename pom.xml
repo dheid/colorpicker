@@ -57,7 +57,7 @@
         <groupId>org.junit</groupId>
         <scope>import</scope>
         <type>pom</type>
-        <version>5.9.0</version>
+        <version>5.9.1</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
