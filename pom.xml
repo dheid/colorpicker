@@ -4,7 +4,7 @@
 
   <groupId>org.drjekyll</groupId>
   <artifactId>colorpicker</artifactId>
-  <version>1.4.4</version>
+  <version>1.4.5-SNAPSHOT</version>
 
   <name>ColorPicker</name>
   <description>A nice color picker using Java Swing that contains a visual color selection and input
@@ -38,7 +38,7 @@
     <connection>scm:git:https://github.com/dheid/colorpicker.git</connection>
     <developerConnection>scm:git:https://github.com/dheid/colorpicker.git</developerConnection>
     <url>https://github.com/dheid/colorpicker</url>
-    <tag>colorpicker-1.4.4</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <properties>
