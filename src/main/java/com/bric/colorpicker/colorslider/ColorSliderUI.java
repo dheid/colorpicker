@@ -204,8 +204,10 @@ public class ColorSliderUI extends BasicSliderUI {
 
         @Override
         public void componentResized(ComponentEvent e) {
-            calculateGeometry();
-            slider.repaint();
+            if (focusRect != null) {
+                calculateGeometry();
+                slider.repaint();
+            }
         }
     }
 
