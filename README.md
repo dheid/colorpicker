@@ -85,7 +85,11 @@ https://opensource.org/licenses/BSD-3-Clause
 
 ## :loudspeaker: Release Notes
 
-### 1.4.3
+### 1.4.5
+
+Prevent NPE on resize (https://github.com/dheid/colorpicker/issues/26)
+
+### 1.4.3 and 1.4.4
 
 Fixed null-pointer exception on changing slider
 
