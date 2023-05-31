@@ -22,7 +22,7 @@ jobs:
       - uses: GabrielBB/xvfb-action@v1
         with:
           run: mvn -B verify
-      - uses: madrapps/jacoco-report@v1.3
+      - uses: madrapps/jacoco-report@v1.4
         with:
           paths: ${{ github.workspace }}/target/site/jacoco/jacoco.xml
           token: ${{ secrets.GITHUB_TOKEN }}
