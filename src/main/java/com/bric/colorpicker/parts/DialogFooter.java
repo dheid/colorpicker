@@ -36,6 +36,7 @@ import java.awt.event.HierarchyListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.lang.reflect.Method;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
@@ -120,10 +121,12 @@ public class DialogFooter extends JPanel {
     private static final String PROPERTY_UNSAFE = "Dialog.Unsafe.Action";
     private static final KeyStroke escapeKey = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
     private static final KeyStroke commandPeriodKey = KeyStroke.getKeyStroke(KeyEvent.VK_PERIOD, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+
     /**
-     * The localized STRINGS used in dialogs.
+     * Path to the localization bundle
      */
-    private static final ResourceBundle strings = ResourceBundle.getBundle("com.bric.colorpicker.resources.DialogFooter");
+    private static final String LOCALIZATION_BUNDLE_PATH = "com.bric.colorpicker.resources.DialogFooter";
+
     /**
      * This is the client property of buttons created in static methods by this class.
      */
@@ -200,6 +203,12 @@ public class DialogFooter extends JPanel {
      * should be the only option presented to the user.
      */
     private static final int DONT_SAVE_OPTION = uniqueCtr++;
+
+    /**
+     * The localized STRINGS used in dialogs.
+     */
+    private static ResourceBundle strings = ResourceBundle.getBundle(LOCALIZATION_BUNDLE_PATH);
+
     /**
      * Used to indicate the user selected an option not otherwise
      * specified in this set of constants.  It may be possible
@@ -352,7 +361,7 @@ public class DialogFooter extends JPanel {
     private int buttonGap;
     private int unsafeButtonGap;
 
-    /**
+        /**
      * Create a new {@code DialogFooter}.
      *
      * @param leftControls    the controls on the left side of this dialog, such as a help target, or a "Reset" button.
@@ -365,7 +374,28 @@ public class DialogFooter extends JPanel {
      *                        (May be null.)
      */
     private DialogFooter(JComponent[] leftControls, JComponent[] dismissControls, boolean autoClose, JButton defaultButton) {
+        this(leftControls, dismissControls, autoClose, defaultButton, null);
+    }
+
+    /**
+     * Create a new {@code DialogFooter}.
+     *
+     * @param leftControls    the controls on the left side of this dialog, such as a help target, or a "Reset" button.
+     * @param dismissControls the controls on the right side of this dialog that should dismiss this dialog.  Also
+     *                        called "action" buttons.
+     * @param autoClose       whether the dismiss buttons should automatically close the containing window.
+     *                        If this is {@code false}, then it is assumed someone else is taking care of closing/disposing the
+     *                        containing dialog
+     * @param defaultButton   the optional button in {@code dismissControls} to make the default button in this dialog.
+     *                        (May be null.)
+     * @param local the current active local of the app
+     */
+    private DialogFooter(JComponent[] leftControls, JComponent[] dismissControls, boolean autoClose, JButton defaultButton, Locale locale) {
         super(new GridBagLayout());
+
+        if(locale == null) strings = ResourceBundle.getBundle(LOCALIZATION_BUNDLE_PATH);
+        else strings = ResourceBundle.getBundle(LOCALIZATION_BUNDLE_PATH, locale);
+
         this.autoClose = autoClose;
         //this may be common:
         if (leftControls == null) {
@@ -541,7 +571,7 @@ public class DialogFooter extends JPanel {
         return button;
     }
 
-    /**
+      /**
      * Creates a {@code DialogFooter}.
      *
      * @param leftComponents    the components to put on the left side of the footer.
@@ -554,6 +584,23 @@ public class DialogFooter extends JPanel {
      * @return a {@code DialogFooter}
      */
     public static DialogFooter createDialogFooter(JComponent[] leftComponents, int options, int defaultButton, EscapeKeyBehavior escapeKeyBehavior) {
+        return createDialogFooter(leftComponents, options, defaultButton, escapeKeyBehavior, null);
+    }
+
+    /**
+     * Creates a {@code DialogFooter}.
+     *
+     * @param leftComponents    the components to put on the left side of the footer.
+     *                          <P>The Apple guidelines state that this area is reserved for
+     *                          "button[s] that affect the contents of the dialog itself, such as Reset [or Help]".
+     * @param options           one of the OPTIONS fields in this class, such as YES_NO_OPTION or CANCEL_OPTION.
+     * @param defaultButton     the OPTION field corresponding to the button that
+     *                          should be the default button, or -1 if there should be no default button.
+     * @param escapeKeyBehavior one of the EscapeKeyBehavior options in this class.
+     * @param local the current active local of the app
+     * @return a {@code DialogFooter}
+     */
+    public static DialogFooter createDialogFooter(JComponent[] leftComponents, int options, int defaultButton, EscapeKeyBehavior escapeKeyBehavior, Locale locale) {
 
         if (escapeKeyBehavior == EscapeKeyBehavior.TRIGGERS_NONDEFAULT) {
             int buttonCount = 1;
@@ -569,6 +616,9 @@ public class DialogFooter extends JPanel {
                 throw new IllegalArgumentException("request for escape key to map to " + buttonCount + " buttons.");
             }
         }
+
+        if(locale == null) strings = ResourceBundle.getBundle(LOCALIZATION_BUNDLE_PATH);
+        else strings = ResourceBundle.getBundle(LOCALIZATION_BUNDLE_PATH, locale);
 
         JButton cancelButton = null;
         if (options == CANCEL_OPTION ||
@@ -649,7 +699,7 @@ public class DialogFooter extends JPanel {
             }
         }
 
-        return new DialogFooter(leftComponents, dismissControls, true, theDefaultButton);
+        return new DialogFooter(leftComponents, dismissControls, true, theDefaultButton, locale);
     }
 
     /**

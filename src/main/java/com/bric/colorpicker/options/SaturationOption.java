@@ -1,12 +1,18 @@
 package com.bric.colorpicker.options;
 
+import java.util.Locale;
+
 import com.bric.colorpicker.ColorPickerMode;
 import com.bric.colorpicker.models.ColorModel;
 
 public class SaturationOption extends Option {
 
     public SaturationOption() {
-        super(STRINGS.getObject("saturationLabel").toString(), ColorPickerMode.SATURATION);
+        this(null);
+    }
+
+    public SaturationOption(Locale locale) {
+        super("saturationLabel", ColorPickerMode.SATURATION, locale);
     }
 
     @Override

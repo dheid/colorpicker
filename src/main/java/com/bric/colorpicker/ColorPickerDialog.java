@@ -31,6 +31,7 @@ import java.awt.Insets;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -44,7 +45,7 @@ import javax.swing.JDialog;
  */
 public class ColorPickerDialog extends JDialog {
 
-    private static final ResourceBundle STRINGS = ResourceBundle.getBundle("com.bric.colorpicker.resources.ColorPickerDialog");
+    private static final String LOCALIZATION_BUNDLE_PATH = "com.bric.colorpicker.resources.ColorPickerDialog";
     public static final JComponent[] LEFT_COMPONENTS = new JComponent[0];
 
     private ColorPicker colorPicker;
@@ -56,13 +57,25 @@ public class ColorPickerDialog extends JDialog {
     }
 
     public ColorPickerDialog(Frame owner, Color color, boolean includeOpacity) {
-        super(owner);
-        initialize(owner, color, includeOpacity);
+        this(owner, color, includeOpacity, null);
     }
 
     public ColorPickerDialog(Dialog owner, Color color, boolean includeOpacity) {
+        this(owner, color, includeOpacity, null);
+    }
+
+    public ColorPickerDialog(Locale locale) {
+        this((Frame) null, Color.BLUE, false, locale);
+    }
+
+    public ColorPickerDialog(Frame owner, Color color, boolean includeOpacity, Locale locale) {
         super(owner);
-        initialize(owner, color, includeOpacity);
+        initialize(owner, color, includeOpacity, locale);
+    }
+
+    public ColorPickerDialog(Dialog owner, Color color, boolean includeOpacity, Locale locale) {
+        super(owner);
+        initialize(owner, color, includeOpacity, locale);
     }
 
     /**
@@ -74,21 +87,26 @@ public class ColorPickerDialog extends JDialog {
      * @param title          the title for the dialog.
      * @param originalColor  the color the {@code ColorPicker} initially points to.
      * @param includeOpacity whether to add a control for the opacity of the color.
+     * @param locale the current active local of the app
      * @return the {@code Color} the user chooses, or {@code null} if the user cancels the dialog.
      */
-    public static Color showDialog(Window owner, String title, Color originalColor, boolean includeOpacity) {
+    public static Color showDialog(Window owner, String title, Color originalColor, boolean includeOpacity, Locale locale) {
         ColorPickerDialog dialog;
+        ResourceBundle strings;
+
+        if(locale == null) strings = ResourceBundle.getBundle(LOCALIZATION_BUNDLE_PATH);
+        else strings = ResourceBundle.getBundle(LOCALIZATION_BUNDLE_PATH, locale);
 
         if (owner instanceof Frame || owner == null) {
-            dialog = new ColorPickerDialog((Frame) owner, originalColor, includeOpacity);
+            dialog = new ColorPickerDialog((Frame) owner, originalColor, includeOpacity, locale);
         } else if (owner instanceof Dialog) {
-            dialog = new ColorPickerDialog((Dialog) owner, originalColor, includeOpacity);
+            dialog = new ColorPickerDialog((Dialog) owner, originalColor, includeOpacity, locale);
         } else {
             throw new IllegalArgumentException("the owner (" + owner.getClass().getName() + ") must be a java.awt.Frame or a java.awt.Dialog");
         }
 
         if (title == null) {
-            dialog.setTitle(STRINGS.getObject("ColorPickerDialogTitle").toString());
+            dialog.setTitle(strings.getObject("ColorPickerDialogTitle").toString());
         } else {
             dialog.setTitle(title);
         }
@@ -110,7 +128,23 @@ public class ColorPickerDialog extends JDialog {
      * @return the {@code Color} the user chooses, or {@code null} if the user cancels the dialog.
      */
     public static Color showDialog(Window owner, Color originalColor, boolean includeOpacity) {
-        return showDialog(owner, null, originalColor, includeOpacity);
+        return showDialog(owner, null, originalColor, includeOpacity, null);
+    }
+
+        /**
+     * This creates a modal dialog prompting the user to select a color.
+     * <P>This uses a generic dialog title: "Choose a Color".
+     *
+     * @param owner          the dialog this new dialog belongs to.  This must be a Frame or a Dialog.
+     *                       Java 1.6 supports Windows here, but this package is designed/compiled to work in Java 1.4,
+     *                       so an {@code IllegalArgumentException} will be thrown if this target is a {@code Window}.
+     * @param originalColor  the color the {@code ColorPicker} initially points to.
+     * @param includeOpacity whether to add a control for the opacity of the color.
+     * @param local the current active local of the app
+     * @return the {@code Color} the user chooses, or {@code null} if the user cancels the dialog.
+     */
+    public static Color showDialog(Window owner, Color originalColor, boolean includeOpacity, Locale locale) {
+        return showDialog(owner, null, originalColor, includeOpacity, locale);
     }
 
     /**
@@ -124,11 +158,27 @@ public class ColorPickerDialog extends JDialog {
      * @return the {@code Color} the user chooses, or {@code null} if the user cancels the dialog.
      */
     public static Color showDialog(Window owner, Color originalColor) {
-        return showDialog(owner, null, originalColor, false);
+        return showDialog(owner, null, originalColor, false, null);
     }
 
-    private void initialize(Component owner, Color color, boolean includeOpacity) {
-        colorPicker = new ColorPicker(true, includeOpacity);
+    /**
+     * This creates a modal dialog prompting the user to select a color.
+     * <P>This uses a generic dialog title: "Choose a Color", and does not include opacity.
+     *
+     * @param owner         the dialog this new dialog belongs to.  This must be a Frame or a Dialog.
+     *                      Java 1.6 supports Windows here, but this package is designed/compiled to work in Java 1.4,
+     *                      so an {@code IllegalArgumentException} will be thrown if this target is a {@code Window}.
+     * @param originalColor the color the {@code ColorPicker} initially points to.
+     * @param locale  the current active local of the app
+     * @return the {@code Color} the user chooses, or {@code null} if the user cancels the dialog.
+     */
+    public static Color showDialog(Window owner, Color originalColor, Locale locale) {
+        return showDialog(owner, null, originalColor, false, locale);
+    }
+
+    private void initialize(Component owner, Color color, boolean includeOpacity, Locale locale) {
+
+        colorPicker = new ColorPicker(true, includeOpacity, locale);
         setModal(true);
         setResizable(false);
         getContentPane().setLayout(new GridBagLayout());
@@ -143,7 +193,7 @@ public class ColorPickerDialog extends JDialog {
         getContentPane().add(colorPicker, constraints);
         constraints.gridy++;
         DialogFooter footer = DialogFooter.createDialogFooter(LEFT_COMPONENTS,
-                DialogFooter.OK_CANCEL_OPTION, DialogFooter.OK_OPTION, EscapeKeyBehavior.TRIGGERS_CANCEL);
+                DialogFooter.OK_CANCEL_OPTION, DialogFooter.OK_OPTION, EscapeKeyBehavior.TRIGGERS_CANCEL, locale);
         constraints.gridy++;
         constraints.weighty = 0;
         getContentPane().add(footer, constraints);

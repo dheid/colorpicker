@@ -13,6 +13,7 @@ import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.swing.ButtonGroup;
 import javax.swing.JFormattedTextField;
@@ -24,13 +25,28 @@ import javax.swing.event.ChangeListener;
 
 public abstract class Option implements ColorListener, ModeListener {
 
-    protected static final ResourceBundle STRINGS = ResourceBundle.getBundle("com.bric.colorpicker.resources.ColorPicker");
+    protected static final String LOCALIZATION_BUNDLE_PATH = "com.bric.colorpicker.resources.ColorPicker";
     private final ColorListenerWrapper colorListenerWrapper;
     private final ModeListenerWrapper modeListenerWrapper;
     private final JRadioButton radioButton = new JRadioButton();
     private final JSpinner spinner;
     private final JLabel label;
     private final ColorPickerMode mode;
+
+    private ResourceBundle strings;
+
+    protected Option(String localizationKey, ColorPickerMode mode, Locale locale) {
+        
+        if(locale == null) this.strings = ResourceBundle.getBundle(LOCALIZATION_BUNDLE_PATH);
+        else this.strings = ResourceBundle.getBundle(LOCALIZATION_BUNDLE_PATH, locale);
+
+        this.mode = mode;
+        spinner = new JSpinner(new SpinnerNumberModel(0, 0, mode.getMax(), 5));
+        label = new JLabel(this.strings.getObject(localizationKey).toString());
+        colorListenerWrapper = ColorListenerWrapper.withListener(this::doColorChanged);
+        modeListenerWrapper = ModeListenerWrapper.withListener(modeModel -> setSelected(modeModel.getMode() == mode));
+    }
+
 
     protected Option(String text, ColorPickerMode mode) {
         this.mode = mode;

@@ -1,12 +1,18 @@
 package com.bric.colorpicker.options;
 
+import java.util.Locale;
+
 import com.bric.colorpicker.ColorPickerMode;
 import com.bric.colorpicker.models.ColorModel;
 
 public class GreenOption extends Option {
 
     public GreenOption() {
-        super(STRINGS.getObject("greenLabel").toString(), ColorPickerMode.GREEN);
+        this(null);
+    }
+
+    public GreenOption(Locale locale) {
+        super("greenLabel", ColorPickerMode.GREEN, locale);
     }
 
     @Override

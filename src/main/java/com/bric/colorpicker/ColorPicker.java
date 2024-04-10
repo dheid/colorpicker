@@ -41,6 +41,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.swing.ButtonGroup;
 import javax.swing.JComponent;
@@ -102,33 +103,46 @@ public class ColorPicker extends JPanel {
     private static final String MODE_CONTROLS_VISIBLE_PROPERTY = "mode controls visible";
 
     /**
+     * Path to the localization bundle
+     */
+    private static final String LOCALIZATION_BUNDLE_PATH = "com.bric.colorpicker.resources.ColorPicker";
+
+    /**
      * The localized STRINGS used in this (and related) panel(s).
      */
-    private static final ResourceBundle strings = ResourceBundle.getBundle("com.bric.colorpicker.resources.ColorPicker");
-
+    private final ResourceBundle strings;
     private final ColorModel colorModel = new ColorModel();
     private final ModeModel modeModel = new ModeModel();
     private final ColorSlider slider = new ColorSlider();
-    private final Option alphaOption = new AlphaOption();
-    private final Option hueOption = new HueOption();
-    private final Option saturationOption = new SaturationOption();
-    private final Option brightnessOption = new BrightnessOption();
-    private final Option redOption = new RedOption();
-    private final Option greenOption = new GreenOption();
-    private final Option blueOption = new BlueOption();
-    private final ColorSwatch preview = new ColorSwatch(50);
-    private final JLabel hexLabel = new JLabel(strings.getObject("hexLabel").toString());
+    private final Option alphaOption;
+    private final Option hueOption;
+    private final Option saturationOption;
+    private final Option brightnessOption;
+    private final Option redOption;
+    private final Option greenOption;
+    private final Option blueOption;
     private final HexField hexField = new HexField();
     private final JPanel expertControls = new JPanel(new GridBagLayout());
     private final ColorPickerPanel colorPanel = new ColorPickerPanel();
     private final OpacitySlider opacitySlider = new OpacitySlider();
-    private final JLabel opacityLabel = new JLabel(strings.getObject("opacityLabel").toString());
+
+    private final ColorSwatch preview;
+    private final JLabel hexLabel;
+    private final JLabel opacityLabel;
 
     /**
      * Create a new {@code ColorPicker} with all controls visible except opacity.
      */
     public ColorPicker() {
         this(true, false);
+    }
+
+    /**
+     * Create a new {@code ColorPicker} with all controls visible except opacity with the active local
+     * @param local the current active local of the app
+     */
+    public ColorPicker(Locale local) {
+        this(true, false, local);
     }
 
     /**
@@ -142,9 +156,25 @@ public class ColorPicker extends JPanel {
      * @param includeOpacity     whether the opacity controls will be shown
      */
     public ColorPicker(boolean showExpertControls, boolean includeOpacity) {
+        this(showExpertControls, includeOpacity, null);
+    }
+
+    /**
+     * Create a new {@code ColorPicker}.
+     *
+     * @param showExpertControls the labels/spinners/buttons on the right side of a
+     *                           {@code ColorPicker} are optional.  This boolean will control whether they
+     *                           are shown or not.
+     *                           <P>It may be that your users will never need or want numeric control when
+     *                           they choose their colors, so hiding this may simplify your interface.
+     * @param includeOpacity     whether the opacity controls will be shown
+     * @param locale              the current active local of the app
+     */
+    public ColorPicker(boolean showExpertControls, boolean includeOpacity, Locale locale) {
         super(new GridBagLayout());
 
-        initNames();
+        if(locale == null) strings = ResourceBundle.getBundle(LOCALIZATION_BUNDLE_PATH);
+        else strings = ResourceBundle.getBundle(LOCALIZATION_BUNDLE_PATH, locale);
 
         GridBagConstraints constraints = new GridBagConstraints();
 
@@ -159,7 +189,7 @@ public class ColorPicker extends JPanel {
         ButtonGroup buttonGroup = new ButtonGroup();
 
         Option[] options = {
-            hueOption, saturationOption, brightnessOption, redOption, greenOption, blueOption
+            hueOption = new HueOption(locale), saturationOption = new SaturationOption(locale), brightnessOption = new BrightnessOption(locale), redOption = new RedOption(locale), greenOption = new GreenOption(locale), blueOption = new BlueOption(locale)
         };
 
         for (int optionIndex = 0; optionIndex < options.length; optionIndex++) {
@@ -173,6 +203,7 @@ public class ColorPicker extends JPanel {
         constraints.insets = new Insets(normalInsets.top + 10, normalInsets.left, normalInsets.bottom, normalInsets.right);
         constraints.anchor = GridBagConstraints.LINE_END;
         constraints.fill = GridBagConstraints.NONE;
+        this.hexLabel =  new JLabel(strings.getObject("hexLabel").toString());
         optionsPanel.add(hexLabel, constraints);
 
         constraints.gridx++;
@@ -180,6 +211,7 @@ public class ColorPicker extends JPanel {
         constraints.fill = GridBagConstraints.HORIZONTAL;
         optionsPanel.add(hexField, constraints);
 
+        alphaOption = new AlphaOption(locale);
         alphaOption.addTo(optionsPanel, constraints);
 
         constraints.gridx = 0;
@@ -214,6 +246,7 @@ public class ColorPicker extends JPanel {
         constraints.weighty = 0;
         constraints.insets = normalInsets;
         constraints.anchor = GridBagConstraints.CENTER;
+        this.opacityLabel = new JLabel(strings.getObject("opacityLabel").toString());
         add(opacityLabel, constraints);
 
         constraints.gridx++;
@@ -231,6 +264,7 @@ public class ColorPicker extends JPanel {
         constraints.weightx = 1;
         constraints.anchor = GridBagConstraints.PAGE_START;
         constraints.insets = new Insets(normalInsets.top, normalInsets.left + 8, normalInsets.bottom + 10, normalInsets.right + 8);
+        this.preview = new ColorSwatch(50, locale);
         expertControls.add(preview, constraints);
 
         constraints.gridy++;
@@ -238,6 +272,8 @@ public class ColorPicker extends JPanel {
         constraints.anchor = GridBagConstraints.CENTER;
         constraints.insets = new Insets(normalInsets.top, normalInsets.left, 0, normalInsets.right);
         expertControls.add(optionsPanel, constraints);
+
+        initNames();
 
         initializeColorPanel();
         initializeSlider();
