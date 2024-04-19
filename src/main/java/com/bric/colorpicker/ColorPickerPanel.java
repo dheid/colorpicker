@@ -201,7 +201,7 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
         super.paint(g);
 
         Graphics2D g2 = (Graphics2D) g;
-        int size = Math.min(MAX_SIZE, Math.min(getWidth() - imagePadding.left - imagePadding.right, getHeight() - imagePadding.top - imagePadding.bottom));
+        int size = calculateSize();
 
         g2.translate(getWidth() / 2 - size / 2, getHeight() / 2 - size / 2);
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -355,14 +355,14 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
             return Color.RGBtoHSB(rgb[0], rgb[1], rgb[2], null);
         }
 
-        int size = Math.min(MAX_SIZE, Math.min(getWidth() - imagePadding.left - imagePadding.right, getHeight() - imagePadding.top - imagePadding.bottom));
+        int size = calculateSize();
         p.translate(-(getWidth() / 2 - size / 2), -(getHeight() / 2 - size / 2));
         if (BRIGHTNESS == mode || SATURATION == mode) {
             //the two circular views:
             double radius = size / 2.0;
             double x = p.getX() - size / 2.0;
             double y = p.getY() - size / 2.0;
-            double r = Math.sqrt(x * x + y * y) / radius;
+            double r = StrictMath.sqrt(StrictMath.pow(x, 2.0) + StrictMath.pow(y, 2.0)) / radius;
 
             if (1 < r) {
                 r = 1;
@@ -398,6 +398,10 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
         return new float[]{hue, s, b};
     }
 
+    private int calculateSize() {
+        return Math.min(MAX_SIZE, Math.min(getWidth() - imagePadding.left - imagePadding.right, getHeight() - imagePadding.top - imagePadding.bottom));
+    }
+
     /**
      * Returns the color at the indicated point in RGB values.
      *
@@ -414,7 +418,7 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
             return new int[]{r, g, b};
         }
 
-        int size = Math.min(MAX_SIZE, Math.min(getWidth() - imagePadding.left - imagePadding.right, getHeight() - imagePadding.top - imagePadding.bottom));
+        int size = calculateSize();
         p.translate(-(getWidth() / 2 - size / 2), -(getHeight() / 2 - size / 2));
 
         int x2 = p.x * 255 / size;
@@ -507,7 +511,7 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
      * Recalculates the (x,y) point used to indicate the selected color.
      */
     private void regeneratePoint() {
-        int size = Math.min(MAX_SIZE, Math.min(getWidth() - imagePadding.left - imagePadding.right, getHeight() - imagePadding.top - imagePadding.bottom));
+        int size = calculateSize();
         if (HUE == mode || SATURATION == mode || BRIGHTNESS == mode) {
             if (HUE == mode) {
                 point = new Point((int) (sat * size + 0.5), (int) (bri * size + 0.5));
@@ -543,7 +547,7 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
      * Regenerates the image.
      */
     private synchronized void regenerateImage() {
-        int size = Math.min(MAX_SIZE, Math.min(getWidth() - imagePadding.left - imagePadding.right, getHeight() - imagePadding.top - imagePadding.bottom));
+        int size = calculateSize();
 
         if (BRIGHTNESS == mode || SATURATION == mode) {
             float bri2 = bri;
@@ -657,7 +661,7 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
                 multiplier = 5;
             }
             if (0 != dx || 0 != dy) {
-                int size = Math.min(MAX_SIZE, Math.min(getWidth() - imagePadding.left - imagePadding.right, getHeight() - imagePadding.top - imagePadding.bottom));
+                int size = calculateSize();
 
                 int offsetX = getWidth() / 2 - size / 2;
                 int offsetY = getHeight() / 2 - size / 2;
@@ -675,14 +679,16 @@ public class ColorPickerPanel extends JPanel implements ColorListener, ModeListe
     private class ColorPickerMouseInputListener extends MouseInputAdapter {
         @Override
         public void mousePressed(MouseEvent e) {
-            requestFocus();
-            Point p = e.getPoint();
-            if (BRIGHTNESS == mode || SATURATION == mode || HUE == mode) {
-                float[] hsb = getHSB(p);
-                setHSB(hsb[0], hsb[1], hsb[2]);
-            } else {
-                int[] rgb = getRGB(p);
-                setRGB(rgb[0], rgb[1], rgb[2]);
+            if (calculateSize() > 0) {
+                requestFocus();
+                Point p = e.getPoint();
+                if (BRIGHTNESS == mode || SATURATION == mode || HUE == mode) {
+                    float[] hsb = getHSB(p);
+                    setHSB(hsb[0], hsb[1], hsb[2]);
+                } else {
+                    int[] rgb = getRGB(p);
+                    setRGB(rgb[0], rgb[1], rgb[2]);
+                }
             }
         }
 

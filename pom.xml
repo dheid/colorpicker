@@ -47,7 +47,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <slf4j.version>2.0.7</slf4j.version>
+    <slf4j.version>2.0.13</slf4j.version>
   </properties>
 
   <dependencyManagement>
@@ -57,7 +57,7 @@
         <groupId>org.junit</groupId>
         <scope>import</scope>
         <type>pom</type>
-        <version>5.10.0</version>
+        <version>5.10.2</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -71,7 +71,7 @@
     <dependency>
       <artifactId>lombok</artifactId>
       <groupId>org.projectlombok</groupId>
-      <version>1.18.28</version>
+      <version>1.18.32</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -82,7 +82,7 @@
     <dependency>
       <artifactId>assertj-core</artifactId>
       <groupId>org.assertj</groupId>
-      <version>3.24.2</version>
+      <version>3.25.3</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -137,7 +137,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.11.0</version>
+          <version>3.13.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -154,7 +154,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-clean-plugin</artifactId>
-          <version>3.3.1</version>
+          <version>3.3.2</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -169,7 +169,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>3.3.0</version>
+          <version>3.4.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -179,17 +179,17 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
-          <version>3.12.1</version>
+          <version>4.0.0-M13</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.1.2</version>
+          <version>3.2.5</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-source-plugin</artifactId>
-          <version>3.3.0</version>
+          <version>3.3.1</version>
           <executions>
             <execution>
               <id>attach-sources</id>
@@ -202,7 +202,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.5.0</version>
+          <version>3.6.3</version>
           <executions>
             <execution>
               <id>attach-javadocs</id>
@@ -215,7 +215,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-gpg-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.2.3</version>
           <executions>
             <execution>
               <id>sign-artifacts</id>
@@ -258,7 +258,7 @@
           </execution>
         </executions>
         <groupId>org.jacoco</groupId>
-        <version>0.8.10</version>
+        <version>0.8.12</version>
       </plugin>
       <plugin>
         <artifactId>maven-enforcer-plugin</artifactId>
@@ -278,7 +278,7 @@
           </execution>
         </executions>
         <groupId>org.apache.maven.plugins</groupId>
-        <version>3.1.0</version>
+        <version>3.4.1</version>
       </plugin>
     </plugins>
 
