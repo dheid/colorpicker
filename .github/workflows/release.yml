@@ -17,7 +17,7 @@ jobs:
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-passphrase: GPG_PASSPHRASE
       - run: |
-          git config user.email "matomo-tracker@daniel-heid.de"
+          git config user.email "mail@daniel-heid.de"
           git config user.name "Daniel Heid"
       - id: version
         run: |
