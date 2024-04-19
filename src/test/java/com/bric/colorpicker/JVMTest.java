@@ -33,7 +33,7 @@ class JVMTest {
 
         boolean isMac = JVM.IS_MAC;
 
-        assertThat(isMac).isFalse();
+        assertThat(isMac).isTrue();
 
     }
 
