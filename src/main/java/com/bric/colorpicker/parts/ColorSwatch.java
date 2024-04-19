@@ -33,6 +33,7 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Transferable;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.swing.JPanel;
 
@@ -52,11 +53,29 @@ public class ColorSwatch extends JPanel implements ColorListener {
      * The default value for this key is assumed to be false if undefined.
      */
     private static final String PROPERTY_COPY_CONTEXTUAL_MENU_ITEM = ColorSwatch.class + ".copyContextualMenuItem";
-    private static final ResourceBundle strings = ResourceBundle.getBundle("com.bric.colorpicker.resources.ColorPicker");
+    private static final String LOCALIZATION_BUNDLE_PATH = "com.bric.colorpicker.resources.ColorPicker";
     private static TexturePaint checkerPaint;
+    private final ResourceBundle strings;
     private final int w;
 
     public ColorSwatch(int width) {
+        this(width, null);
+    }
+
+    private ColorSwatch(Color color, int width) {
+        this(width);
+        setForeground(color);
+    }
+
+    private ColorSwatch(Color color, int width, Locale locale) {
+        this(width, locale);
+        setForeground(color);
+    }
+
+    public ColorSwatch(int width, Locale locale) {
+        if(locale == null) strings = ResourceBundle.getBundle(LOCALIZATION_BUNDLE_PATH);
+        else strings = ResourceBundle.getBundle(LOCALIZATION_BUNDLE_PATH, locale);
+
         w = width;
         setPreferredSize(new Dimension(width, width));
         setMinimumSize(new Dimension(width, width));
@@ -64,11 +83,6 @@ public class ColorSwatch extends JPanel implements ColorListener {
 
         addPropertyChangeListener(PROPERTY_COPY_CONTEXTUAL_MENU_ITEM, pcl);
         updateContextualMenu();
-    }
-
-    private ColorSwatch(Color color, int width) {
-        this(width);
-        setForeground(color);
     }
 
     private static TexturePaint getCheckerPaint() {

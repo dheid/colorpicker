@@ -1,12 +1,18 @@
 package com.bric.colorpicker.options;
 
+import java.util.Locale;
+
 import com.bric.colorpicker.ColorPickerMode;
 import com.bric.colorpicker.models.ColorModel;
 
 public class HueOption extends Option {
 
     public HueOption() {
-        super(STRINGS.getObject("hueLabel").toString(), ColorPickerMode.HUE);
+        this(null);
+    }
+
+    public HueOption(Locale locale) {
+        super("hueLabel", ColorPickerMode.HUE, locale);
     }
 
     @Override

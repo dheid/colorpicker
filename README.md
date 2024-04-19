@@ -39,6 +39,24 @@ colorPicker.addColorListener(colorModel -> System.out.println(colorModel.getColo
 
 This creates a color picker component with expert controls and opacity settings. If the user selects a color, the color listener will be notified.
 
+### :globe_with_meridians: Localization
+
+The color picker supports localization. You can set the locale by passing it to the constructor:
+
+```java
+ColorPicker colorPicker = new ColorPicker(true, true, Locale.FRENCH);
+// or
+ColorPickerDialog.showDialog(null, Color.GREEN, Locale.FRENCH);
+```
+
+Currently, the following languages are supported:
+- English
+- Español
+- Français
+- Deutsch
+- Português
+- Русский
+
 ## :hammer: Building
 
 Please use Maven to build and test the project.

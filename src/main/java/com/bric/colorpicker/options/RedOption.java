@@ -1,12 +1,18 @@
 package com.bric.colorpicker.options;
 
+import java.util.Locale;
+
 import com.bric.colorpicker.ColorPickerMode;
 import com.bric.colorpicker.models.ColorModel;
 
 public class RedOption extends Option {
 
     public RedOption() {
-        super(STRINGS.getObject("redLabel").toString(), ColorPickerMode.RED);
+        this(null);
+    }
+
+    public RedOption(Locale locale) {
+        super("redLabel", ColorPickerMode.RED, locale);
     }
 
     @Override

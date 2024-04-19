@@ -6,11 +6,16 @@ import com.bric.colorpicker.models.ColorModel;
 import javax.swing.ButtonGroup;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
+import java.util.Locale;
 
 public class AlphaOption extends Option {
 
     public AlphaOption() {
-        super(STRINGS.getObject("alphaLabel").toString(), ColorPickerMode.ALPHA);
+        this(null);
+    }
+
+    public AlphaOption(Locale locale) {
+        super("alphaLabel", ColorPickerMode.ALPHA, locale);
     }
 
     @Override

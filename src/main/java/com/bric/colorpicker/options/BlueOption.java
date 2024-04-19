@@ -1,12 +1,18 @@
 package com.bric.colorpicker.options;
 
+import java.util.Locale;
+
 import com.bric.colorpicker.ColorPickerMode;
 import com.bric.colorpicker.models.ColorModel;
 
 public class BlueOption extends Option {
 
     public BlueOption() {
-        super(STRINGS.getObject("blueLabel").toString(), ColorPickerMode.BLUE);
+        this(null);
+    }
+
+    public BlueOption(Locale locale) {
+        super("blueLabel", ColorPickerMode.BLUE, locale);
     }
 
     @Override
