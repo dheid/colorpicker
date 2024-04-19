@@ -26,7 +26,7 @@ Include the following dependency to your project:
 <dependency>
   <groupId>org.drjekyll</groupId>
   <artifactId>colorpicker</artifactId>
-  <version>1.4.3</version>
+  <version>2.0.0</version>
 </dependency>
 ```
 
@@ -102,6 +102,14 @@ license. More details can be found here:
 https://opensource.org/licenses/BSD-3-Clause
 
 ## :loudspeaker: Release Notes
+
+### 2.0.0
+
+* [Localization support](https://github.com/dheid/colorpicker/pull/55)
+
+### 1.4.8
+
+* [Illegal argument exception when color wheel is tiny](https://github.com/dheid/colorpicker/issues/51)
 
 ### 1.4.5
 
