@@ -22,7 +22,7 @@ jobs:
       - id: version
         run: |
           VERSION=$( mvn -B help:evaluate -Dexpression=project.version -q -DforceStdout )
-          echo "::set-output name=version::${VERSION#-SNAPSHOT}"
+          echo "::set-output name=version::${VERSION%-SNAPSHOT}"
       - uses: GabrielBB/xvfb-action@v1
         with:
           run: mvn -B release:prepare release:perform
