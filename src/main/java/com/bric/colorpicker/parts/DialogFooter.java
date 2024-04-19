@@ -597,7 +597,7 @@ public class DialogFooter extends JPanel {
      * @param defaultButton     the OPTION field corresponding to the button that
      *                          should be the default button, or -1 if there should be no default button.
      * @param escapeKeyBehavior one of the EscapeKeyBehavior options in this class.
-     * @param local the current active local of the app
+     * @param locale the current active local of the app
      * @return a {@code DialogFooter}
      */
     public static DialogFooter createDialogFooter(JComponent[] leftComponents, int options, int defaultButton, EscapeKeyBehavior escapeKeyBehavior, Locale locale) {

@@ -19,7 +19,6 @@
  */
 package com.bric.colorpicker;
 
-import java.security.AccessControlException;
 
 /**
  * Static methods relating to the JVM environment.
@@ -39,7 +38,7 @@ public class JVM {
     private static String getOSName() {
         try {
             return System.getProperty("os.name").toLowerCase();
-        } catch (AccessControlException e) {
+        } catch (Exception e) {
             return "unknown";
         }
     }
@@ -47,7 +46,7 @@ public class JVM {
     public static boolean isUsingQuartz() {
         try {
             return IS_MAC && System.getProperty("apple.awt.graphics.UseQuartz") != null && System.getProperty("apple.awt.graphics.UseQuartz").equals("true");
-        } catch (AccessControlException e) {
+        } catch (Exception e) {
             return false;
         }
     }

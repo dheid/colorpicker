@@ -140,7 +140,7 @@ public class ColorPickerDialog extends JDialog {
      *                       so an {@code IllegalArgumentException} will be thrown if this target is a {@code Window}.
      * @param originalColor  the color the {@code ColorPicker} initially points to.
      * @param includeOpacity whether to add a control for the opacity of the color.
-     * @param local the current active local of the app
+     * @param locale the current active local of the app
      * @return the {@code Color} the user chooses, or {@code null} if the user cancels the dialog.
      */
     public static Color showDialog(Window owner, Color originalColor, boolean includeOpacity, Locale locale) {

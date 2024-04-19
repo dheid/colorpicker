@@ -115,10 +115,6 @@
           </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-javadoc-plugin</artifactId>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
           </plugin>
           <plugin>
@@ -203,6 +199,9 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>3.6.3</version>
+          <configuration>
+            <doclint>all,-missing</doclint>
+          </configuration>
           <executions>
             <execution>
               <id>attach-javadocs</id>
@@ -280,9 +279,11 @@
         <groupId>org.apache.maven.plugins</groupId>
         <version>3.4.1</version>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+      </plugin>
     </plugins>
-
-
   </build>
 
 
