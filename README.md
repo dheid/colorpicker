@@ -76,13 +76,13 @@ This will install the version to your local repository. You can now include it:
 or Gradle with Groovy DSL:
 
 ```groovy
-implementation 'org.drjekyll:fontchooser:2.0.2-SNAPSHOT'
+implementation 'org.drjekyll:colorpicker:2.0.2-SNAPSHOT'
 ```
 
 or Gradle with Kotlin DSL:
 
 ```kotlin
-implementation("org.drjekyll:fontchooser:2.0.2-SNAPSHOT")
+implementation("org.drjekyll:colorpicker:2.0.2-SNAPSHOT")
 ```
 
 
