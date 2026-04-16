@@ -82,7 +82,7 @@
     <dependency>
       <artifactId>assertj-core</artifactId>
       <groupId>org.assertj</groupId>
-      <version>3.25.3</version>
+      <version>3.27.7</version>
       <scope>test</scope>
     </dependency>
     <dependency>
