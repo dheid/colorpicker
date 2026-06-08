@@ -432,7 +432,7 @@
           </execution>
         </executions>
         <groupId>org.jacoco</groupId>
-        <version>0.8.14</version>
+        <version>0.8.15</version>
       </plugin>
       <plugin>
         <artifactId>maven-enforcer-plugin</artifactId>
